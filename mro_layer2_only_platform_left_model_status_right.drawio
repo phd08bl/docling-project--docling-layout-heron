@@ -1,0 +1,184 @@
+<mxfile host="app.diagrams.net" modified="2026-03-19T12:40:00.000Z" agent="OpenAI GPT-5.4 Thinking" version="24.7.17">
+  <diagram id="mro-layer2-only" name="MRO Layer 2 Only">
+    <mxGraphModel dx="1800" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="&lt;font style=&quot;font-size:24px;&quot;&gt;&lt;b&gt;MRO Independent Validation Platform&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px;color:#5F6B7A;&quot;&gt;Layer 2 Detailed Capability View with Model Run and Onboarding Status&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#D0D7DE;shadow=1;fontFamily=Inter;fontSize=18;fontColor=#111827;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1820" height="72" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legendBox" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D0D7DE;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="108" width="1120" height="74" as="geometry"/>
+        </mxCell>
+        <mxCell id="legendTitle" value="&lt;b&gt;Legend&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontFamily=Inter;fontSize=14;fontColor=#111827;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="58" y="121" width="90" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="lg1" value="✅ Available" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontFamily=Inter;fontSize=12;fontColor=#1B5E20;" vertex="1" parent="1">
+          <mxGeometry x="150" y="120" width="145" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="lg2" value="🚧 In Progress" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E5;strokeColor=#F59E0B;dashed=1;dashPattern=8 4;fontFamily=Inter;fontSize=12;fontColor=#92400E;" vertex="1" parent="1">
+          <mxGeometry x="310" y="120" width="150" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="lg3" value="❌ Not Available" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#9CA3AF;dashed=1;dashPattern=2 6;fontFamily=Inter;fontSize=12;fontColor=#4B5563;" vertex="1" parent="1">
+          <mxGeometry x="475" y="120" width="155" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="lg4" value="🔵 Shared / output" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2FF;strokeColor=#4F46E5;fontFamily=Inter;fontSize=12;fontColor=#312E81;" vertex="1" parent="1">
+          <mxGeometry x="645" y="120" width="165" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="lg5" value="⭐ Current team priority" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE7F3;strokeColor=#DB2777;fontFamily=Inter;fontSize=12;fontColor=#9D174D;" vertex="1" parent="1">
+          <mxGeometry x="825" y="120" width="185" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="legendNote" value="Left side: detailed platform features. Right side: lighter-weight model run and onboarding view." style="text;html=1;strokeColor=none;fillColor=none;fontFamily=Inter;fontSize=12;fontColor=#6B7280;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="58" y="150" width="1020" height="18" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="mainLeft" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF7FB;strokeColor=#DB2777;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="205" width="1260" height="820" as="geometry"/>
+        </mxCell>
+        <mxCell id="mainLeftTitle" value="&lt;b&gt;⭐ Layer 2 — Independent Validation Platform&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontFamily=Inter;fontSize=18;fontColor=#831843;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="520" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="mainLeftSub" value="Detailed platform capabilities currently being prioritised by the AI Tech &amp;amp; Tooling team." style="text;html=1;strokeColor=none;fillColor=none;fontFamily=Inter;fontSize=12;fontColor=#9D174D;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="60" y="245" width="720" height="18" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="sharedBand" value="&lt;b&gt;Shared validation assets&lt;/b&gt;  |  Metadata store  |  Prompt library  |  Evaluation templates  |  Audit trail / traceability" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#4F46E5;fontFamily=Inter;fontSize=13;fontColor=#312E81;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="60" y="278" width="1220" height="42" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="sec1" value="&lt;b&gt;1. Project &amp;amp; Setup&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE7F3;strokeColor=#DB2777;fontFamily=Inter;fontSize=13;fontColor=#831843;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="70" y="345" width="265" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="sec2" value="&lt;b&gt;2. Test Design &amp;amp; Scenario Generation&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE7F3;strokeColor=#DB2777;fontFamily=Inter;fontSize=13;fontColor=#831843;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="355" y="345" width="300" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="sec3" value="&lt;b&gt;3. Model Loading &amp;amp; Execution&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE7F3;strokeColor=#DB2777;fontFamily=Inter;fontSize=13;fontColor=#831843;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="675" y="345" width="280" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="sec4" value="&lt;b&gt;4. Evaluation, Reporting &amp;amp; Tool Coverage&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE7F3;strokeColor=#DB2777;fontFamily=Inter;fontSize=13;fontColor=#831843;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="975" y="345" width="285" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Column 1 -->
+        <mxCell id="a1" value="&lt;b&gt;Project Tab&lt;/b&gt;&lt;br&gt;Project list&lt;br&gt;Case metadata&lt;br&gt;Version tracking" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontFamily=Inter;fontSize=12;fontColor=#1B5E20;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="a2" value="&lt;b&gt;Submission Inputs&lt;/b&gt;&lt;br&gt;Docs / prompts&lt;br&gt;Test configs&lt;br&gt;Evidence files" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E5;strokeColor=#F59E0B;dashed=1;dashPattern=8 4;fontFamily=Inter;fontSize=12;fontColor=#92400E;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="400" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="a3" value="&lt;b&gt;Project Settings&lt;/b&gt;&lt;br&gt;Owners&lt;br&gt;Tags&lt;br&gt;Run parameters" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#9CA3AF;dashed=1;dashPattern=2 6;fontFamily=Inter;fontSize=12;fontColor=#4B5563;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="145" y="515" width="115" height="84" as="geometry"/>
+        </mxCell>
+
+        <!-- Column 2 -->
+        <mxCell id="b1" value="&lt;b&gt;Scenario Generation&lt;/b&gt;&lt;br&gt;Synthetic prompts&lt;br&gt;Edge cases&lt;br&gt;Test packs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E5;strokeColor=#F59E0B;dashed=1;dashPattern=8 4;fontFamily=Inter;fontSize=12;fontColor=#92400E;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="400" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="b2" value="&lt;b&gt;Scenario Library&lt;/b&gt;&lt;br&gt;Reusable sets&lt;br&gt;Domains&lt;br&gt;Prompt groups" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#9CA3AF;dashed=1;dashPattern=2 6;fontFamily=Inter;fontSize=12;fontColor=#4B5563;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="400" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="b3" value="&lt;b&gt;Validation Config&lt;/b&gt;&lt;br&gt;Objectives&lt;br&gt;Criteria&lt;br&gt;Dataset binding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E5;strokeColor=#F59E0B;dashed=1;dashPattern=8 4;fontFamily=Inter;fontSize=12;fontColor=#92400E;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="455" y="515" width="115" height="84" as="geometry"/>
+        </mxCell>
+
+        <!-- Column 3 -->
+        <mxCell id="c1" value="&lt;b&gt;Model Loading&lt;/b&gt;&lt;br&gt;Select model&lt;br&gt;Wrapper / endpoint&lt;br&gt;Runtime config" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E5;strokeColor=#F59E0B;dashed=1;dashPattern=8 4;fontFamily=Inter;fontSize=12;fontColor=#92400E;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="400" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2" value="&lt;b&gt;Tool Selector&lt;/b&gt;&lt;br&gt;Choose checks&lt;br&gt;Modules&lt;br&gt;Workflow setup" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E5;strokeColor=#F59E0B;dashed=1;dashPattern=8 4;fontFamily=Inter;fontSize=12;fontColor=#92400E;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="400" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3" value="&lt;b&gt;Model Runner&lt;/b&gt;&lt;br&gt;Execute model / agent&lt;br&gt;Capture outputs&lt;br&gt;Controlled run" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E5;strokeColor=#F59E0B;dashed=1;dashPattern=8 4;fontFamily=Inter;fontSize=12;fontColor=#92400E;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="990" y="400" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="c4" value="&lt;b&gt;Batch Run Manager&lt;/b&gt;&lt;br&gt;Run suites&lt;br&gt;Compare cases&lt;br&gt;Store results" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#9CA3AF;dashed=1;dashPattern=2 6;fontFamily=Inter;fontSize=12;fontColor=#4B5563;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="795" y="515" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="c5" value="&lt;b&gt;Agent / RAG Testing&lt;/b&gt;&lt;br&gt;Multi-step flows&lt;br&gt;Retrieval checks&lt;br&gt;Tool-call capture" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#9CA3AF;dashed=1;dashPattern=2 6;fontFamily=Inter;fontSize=12;fontColor=#4B5563;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="925" y="515" width="115" height="84" as="geometry"/>
+        </mxCell>
+
+        <!-- Column 4 -->
+        <mxCell id="d1" value="&lt;b&gt;Evaluation Engine&lt;/b&gt;&lt;br&gt;LLM-as-Judge&lt;br&gt;Rules&lt;br&gt;Hybrid scoring" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E5;strokeColor=#F59E0B;dashed=1;dashPattern=8 4;fontFamily=Inter;fontSize=12;fontColor=#92400E;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1085" y="400" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="d2" value="&lt;b&gt;Explainability View&lt;/b&gt;&lt;br&gt;Rationale&lt;br&gt;Sample review&lt;br&gt;Finding notes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#9CA3AF;dashed=1;dashPattern=2 6;fontFamily=Inter;fontSize=12;fontColor=#4B5563;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1085" y="515" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="d3" value="&lt;b&gt;Reporting Engine&lt;/b&gt;&lt;br&gt;Evidence pack&lt;br&gt;Score summary&lt;br&gt;Report export" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#9CA3AF;dashed=1;dashPattern=2 6;fontFamily=Inter;fontSize=12;fontColor=#4B5563;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1085" y="630" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="d4" value="&lt;b&gt;Run History&lt;/b&gt;&lt;br&gt;Past runs&lt;br&gt;Comparisons&lt;br&gt;Traceability" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontFamily=Inter;fontSize=12;fontColor=#1B5E20;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1085" y="745" width="115" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="d5" value="&lt;b&gt;Tool Coverage Matrix&lt;/b&gt;&lt;br&gt;Which tools apply&lt;br&gt;By use case type&lt;br&gt;Coverage gaps" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E5;strokeColor=#F59E0B;dashed=1;dashPattern=8 4;fontFamily=Inter;fontSize=12;fontColor=#92400E;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1085" y="860" width="115" height="84" as="geometry"/>
+        </mxCell>
+
+        <!-- Flow arrows -->
+        <mxCell id="e1" edge="1" parent="1" source="a1" target="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#DB2777;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="a2" target="b3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#DB2777;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="b1" target="b3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#DB2777;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="b2" target="b1" value="future reuse" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#9CA3AF;dashed=1;dashPattern=4 4;endArrow=block;endFill=1;fontFamily=Inter;fontSize=10;fontColor=#6B7280;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="b3" target="c1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#C026D3;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="c1" target="c2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#C026D3;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="c2" target="c3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#C026D3;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="c3" target="d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#C026D3;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="c4" target="d4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.8;strokeColor=#C026D3;dashed=1;dashPattern=6 4;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="c5" target="d1" value="agentic tests" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.8;strokeColor=#9CA3AF;dashed=1;dashPattern=6 4;endArrow=block;endFill=1;fontFamily=Inter;fontSize=10;fontColor=#6B7280;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="d1" target="d2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#C026D3;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="d1" target="d3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#C026D3;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="d3" target="d4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#C026D3;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="d4" target="d5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#C026D3;endArrow=block;endFill=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Bottom summary strip -->
+        <mxCell id="summaryStrip" value="&lt;b&gt;Current emphasis:&lt;/b&gt; project-led validation workflow  →  scenario generation  →  model loading / execution  →  evaluation and evidence output  →  tool coverage visibility" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#111827;fontFamily=Inter;fontSize=12;fontColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="60" y="970" width="1220" height="36" as="geometry"/>
+        </mxCell>
+
+        <!-- Right panel -->
+        <mxCell id="rightPanel" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1330" y="205" width="530" height="820" as="geometry"/>
+        </mxCell>
+        <mxCell id="rightTitle" value="&lt;b&gt;Model Run &amp;amp; Onboarding Status&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontFamily=Inter;fontSize=18;fontColor=#111827;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="220" width="340" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="rightSub" value="Lighter-weight portfolio view shown separately from detailed platform build." style="text;html=1;strokeColor=none;fillColor=none;fontFamily=Inter;fontSize=12;fontColor=#6B7280;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="245" width="450" height="18" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rflow" value="&lt;b&gt;Onboarding flow&lt;/b&gt;&lt;br&gt;Register model → Map tools → Configure runner → Test → Evaluate → Report" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2FF;strokeColor=#4F46E5;fontFamily=Inter;fontSize=12;fontColor=#312E81;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="285" width="490" height="68" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rsec1" value="&lt;b&gt;Onboarded&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#22C55E;fontFamily=Inter;fontSize=13;fontColor=#166534;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="380" width="150" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="rbox1" value="Credit Risk Report Writing&lt;br&gt;Letter of Guarantee Validation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0FDF4;strokeColor=#22C55E;fontFamily=Inter;fontSize=13;fontColor=#14532D;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="420" width="490" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rsec2" value="&lt;b&gt;Onboarding in Progress&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#F59E0B;fontFamily=Inter;fontSize=13;fontColor=#92400E;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="540" width="180" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="rbox2" value="ACBS Extraction&lt;br&gt;Knowledge Management Chatbot&lt;br&gt;Model Documentation Validation Agent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFBEB;strokeColor=#F59E0B;dashed=1;dashPattern=8 4;fontFamily=Inter;fontSize=13;fontColor=#78350F;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="580" width="490" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rsec3" value="&lt;b&gt;Planned / Not Started&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E5E7EB;strokeColor=#94A3B8;fontFamily=Inter;fontSize=13;fontColor=#475569;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="720" width="175" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="rbox3" value="Coach AI&lt;br&gt;Copilot use cases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;dashed=1;dashPattern=2 6;fontFamily=Inter;fontSize=13;fontColor=#334155;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="760" width="490" height="76" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rnote" value="&lt;b&gt;Note&lt;/b&gt;&lt;br&gt;This panel is intentionally lighter on detail to keep the emphasis on the platform capabilities currently under build." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;fontFamily=Inter;fontSize=12;fontColor=#475569;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="875" width="490" height="86" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
