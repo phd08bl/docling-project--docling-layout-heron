@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>MRO AI | Risk Oversight Console</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#003608",
+                        "primary-container": "#004f11",
+                        "primary-fixed": "#a3f69c",
+                        "primary-fixed-dim": "#88d982",
+                        "secondary": "#29695b",
+                        "secondary-container": "#acedda",
+                        "secondary-fixed": "#afefdd",
+                        "secondary-fixed-dim": "#94d3c1",
+                        "tertiary": "#00360f",
+                        "tertiary-container": "#014f1a",
+                        "tertiary-fixed": "#abf4ac",
+                        "tertiary-fixed-dim": "#90d792",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "outline": "#707975",
+                        "outline-variant": "#bfc9c4",
+                        "surface": "#f5fced",
+                        "surface-variant": "#dee5d6",
+                        "surface-dim": "#d5dcce",
+                        "surface-bright": "#f5fced",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#eff6e7",
+                        "surface-container": "#e9f0e1",
+                        "surface-container-high": "#e3ebdc",
+                        "surface-container-highest": "#dee5d6",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#72c36e",
+                        "on-primary-fixed": "#002204",
+                        "on-primary-fixed-variant": "#005312",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#2e6d5f",
+                        "on-secondary-fixed": "#00201a",
+                        "on-secondary-fixed-variant": "#065043",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#7bc07e",
+                        "on-tertiary-fixed": "#002107",
+                        "on-tertiary-fixed-variant": "#07521d",
+                        "on-surface": "#171d14",
+                        "on-surface-variant": "#3f4945",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-background": "#171d14",
+                        "background": "#f5fced",
+                        "inverse-surface": "#2c3228",
+                        "inverse-on-surface": "#ecf3e4",
+                        "inverse-primary": "#88d982",
+                        "surface-tint": "#1b6d24",
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .botanical-gradient {
+            background: linear-gradient(135deg, #003608 0%, #004f11 100%);
+        }
+        .botanical-shadow {
+            box-shadow: 0 24px 40px rgba(23, 29, 20, 0.06);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5fced;
+            color: #171d14;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Manrope', sans-serif;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #bfc9c4; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+    <div id="root" class="flex w-full"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        // Shared Components
+        const Sidebar = () => {
+            const location = useLocation();
+            const isActive = (path) => location.pathname === path;
+
+            return (
+                <aside className="flex flex-col h-screen sticky top-0 left-0 bg-[#003608] dark:bg-[#001a04] text-[#f5fced] w-64 shrink-0 z-50">
+                    <div className="p-6">
+                        <div className="flex items-center gap-3 mb-8">
+                            <div className="w-8 h-8 rounded bg-primary-fixed flex items-center justify-center">
+                                <span className="material-symbols-outlined text-primary font-bold">account_balance</span>
+                            </div>
+                            <div>
+                                <h1 className="font-manrope font-bold text-xl tracking-tight text-[#ffffff]">MRO AI</h1>
+                                <p className="font-inter text-xs font-medium opacity-70">Risk Oversight</p>
+                            </div>
+                        </div>
+                        <nav className="space-y-1">
+                            <Link 
+                                to="/" 
+                                className={`mx-2 px-4 py-3 flex items-center gap-3 transition-all rounded-md ${isActive('/') ? 'bg-gradient-to-br from-[#004d40] to-[#003608] text-white shadow-lg' : 'text-[#f5fced]/70 hover:text-white hover:bg-white/10'}`}
+                            >
+                                <span className="material-symbols-outlined">dashboard</span>
+                                <span className="font-inter text-sm tracking-tight font-semibold">Overview</span>
+                            </Link>
+                            <Link 
+                                to="/layer-1-hub" 
+                                className={`mx-2 px-4 py-3 flex items-center gap-3 transition-all rounded-md ${isActive('/layer-1-hub') ? 'bg-gradient-to-br from-[#004d40] to-[#003608] text-white shadow-lg' : 'text-[#f5fced]/70 hover:text-white hover:bg-white/10'}`}
+                            >
+                                <span className="material-symbols-outlined">fact_check</span>
+                                <span className="font-inter text-sm tracking-tight">Oversight Layer 1</span>
+                            </Link>
+                            <Link 
+                                to="/layer-1-workbench" 
+                                className={`mx-2 px-4 py-3 flex items-center gap-3 transition-all rounded-md ${isActive('/layer-1-workbench') ? 'bg-gradient-to-br from-[#004d40] to-[#003608] text-white shadow-lg' : 'text-[#f5fced]/70 hover:text-white hover:bg-white/10'}`}
+                            >
+                                <span className="material-symbols-outlined">clinical_notes</span>
+                                <span className="font-inter text-sm tracking-tight">KB Workbench</span>
+                            </Link>
+                            <Link 
+                                to="/layer-2-workbench" 
+                                className={`mx-2 px-4 py-3 flex items-center gap-3 transition-all rounded-md ${isActive('/layer-2-workbench') ? 'bg-gradient-to-br from-[#004d40] to-[#003608] text-white shadow-lg' : 'text-[#f5fced]/70 hover:text-white hover:bg-white/10'}`}
+                            >
+                                <span className="material-symbols-outlined">analytics</span>
+                                <span className="font-inter text-sm tracking-tight">Oversight Layer 2</span>
+                            </Link>
+                            <Link 
+                                to="/risk-monitoring" 
+                                className={`mx-2 px-4 py-3 flex items-center gap-3 transition-all rounded-md ${isActive('/risk-monitoring') ? 'bg-gradient-to-br from-[#004d40] to-[#003608] text-white shadow-lg' : 'text-[#f5fced]/70 hover:text-white hover:bg-white/10'}`}
+                            >
+                                <span className="material-symbols-outlined">monitor_heart</span>
+                                <span className="font-inter text-sm tracking-tight">Post-Go-Live</span>
+                            </Link>
+                        </nav>
+                    </div>
+                    <div className="mt-auto p-4 border-t border-white/10">
+                        <button className="w-full botanical-gradient text-white py-3 rounded-md mb-4 flex items-center justify-center gap-2 hover:opacity-90 transition-all scale-95 active:scale-90 font-inter text-sm font-semibold">
+                            <span className="material-symbols-outlined text-sm">add</span>
+                            New Assessment
+                        </button>
+                        <div className="space-y-1">
+                            <a className="text-[#f5fced]/70 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-md" href="#">
+                                <span className="material-symbols-outlined">settings</span>
+                                <span className="font-inter text-xs font-medium">Settings</span>
+                            </a>
+                            <a className="text-[#f5fced]/70 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-md" href="#">
+                                <span className="material-symbols-outlined">help_outline</span>
+                                <span className="font-inter text-xs font-medium">Support</span>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            );
+        };
+
+        const Header = ({ title }) => (
+            <header className="flex justify-between items-center w-full px-8 py-4 bg-[#f5fced]/80 backdrop-blur-xl sticky top-0 z-40 h-16">
+                <div className="flex items-center gap-8 overflow-hidden">
+                    <span className="font-manrope font-extrabold text-[#003608] dark:text-[#eff6e7] text-lg uppercase tracking-wider truncate min-w-0">{title}</span>
+                    <nav className="hidden md:flex gap-6 shrink-0">
+                        <Link to="/" className="text-[#004d40] font-bold border-b-2 border-[#004d40] pb-1 font-inter text-xs uppercase tracking-widest">Dashboard</Link>
+                        <a className="text-[#171d14]/60 hover:text-[#004d40] transition-colors font-inter text-xs uppercase tracking-widest" href="#">Evidence Ledger</a>
+                        <a className="text-[#171d14]/60 hover:text-[#004d40] transition-colors font-inter text-xs uppercase tracking-widest" href="#">Reports</a>
+                    </nav>
+                </div>
+                <div className="flex items-center gap-4">
+                    <div className="relative hidden lg:block">
+                        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">search</span>
+                        <input className="pl-10 pr-4 py-1.5 bg-surface-container-high rounded-full border-none focus:ring-1 focus:ring-primary text-sm w-64" placeholder="Search evidence logs..." type="text" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <button className="p-2 text-on-surface-variant hover:text-primary transition-colors">
+                            <span className="material-symbols-outlined">notifications</span>
+                        </button>
+                    </div>
+                    <div className="h-8 w-[1px] bg-outline-variant/30 mx-2"></div>
+                    <img alt="Profile" className="w-8 h-8 rounded-full border border-outline-variant/20 ml-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUzvh7zlTXfoxD78a_RIk4Gi_s1wg8Esa-2G7MwWkQNvnCzRX9niDgcDra6t9QN86-RBJMnEmQrd2qnEC-99kemKRGn4v5blH3SxOvuahZE2n_dObc2A_T-BUAYcokkvK_Qs7hN_DMXQhTyncfm7Z7LKBPboAKOettF9-JNn7D-DnfslWbFPNNo03EmntMIf3k-OKIHUmVfTKyB01fNCbywCEgRxgWtMfX6l1xOSNLmwT3uDo5Y6VKwiV1OFKdx9pZnfLJq9A6ovM" />
+                </div>
+            </header>
+        );
+
+        // Screen 1: Platform Overview
+        const DashboardPage = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="flex-1 flex flex-col min-w-0">
+                    <Header title="Risk Oversight Console" />
+                    <div className="p-8 space-y-8 overflow-y-auto">
+                        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                            <div className="lg:col-span-8 space-y-4">
+                                <h2 className="text-4xl font-manrope font-extrabold tracking-tight text-primary leading-tight">MRO Risk Oversight Platform</h2>
+                                <p className="text-on-surface-variant max-w-2xl font-body leading-relaxed">
+                                    A unified platform engineered for the enterprise. MRO AI Risk Oversight provides a continuous evidence loop across the model lifecycle, ensuring that innovation remains grounded in rigorous validation and real-time oversight.
+                                </p>
+                                <div className="flex gap-4 pt-2">
+                                    <div className="flex items-center gap-2 px-3 py-1.5 bg-tertiary-fixed rounded-full">
+                                        <span className="w-2 h-2 rounded-full bg-tertiary"></span>
+                                        <span className="text-xs font-semibold text-tertiary uppercase tracking-tighter">System Health: Optimal</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary-container rounded-full">
+                                        <span className="w-2 h-2 rounded-full bg-on-secondary-container"></span>
+                                        <span className="text-xs font-semibold text-on-secondary-container uppercase tracking-tighter">14 Active Assessments</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="lg:col-span-4 bg-surface-container-lowest botanical-shadow p-6 rounded-lg space-y-4 border-l-4 border-primary">
+                                <h3 className="font-headline font-bold text-sm uppercase tracking-widest text-primary">Oversight Principles</h3>
+                                <ul className="space-y-3">
+                                    <li className="flex items-start gap-3">
+                                        <span className="material-symbols-outlined text-primary text-lg">verified_user</span>
+                                        <div className="space-y-0.5">
+                                            <p className="text-sm font-semibold">Evidence-First Validation</p>
+                                            <p className="text-xs text-on-surface-variant">Deterministic proof over probabilistic chat.</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <section className="space-y-6">
+                            <div className="flex items-end justify-between">
+                                <h3 className="text-2xl font-manrope font-bold text-primary">Three-Layer Oversight Model</h3>
+                                <div className="h-[1px] flex-1 bg-outline-variant/20 mx-6 mb-2"></div>
+                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-outline">v2.4.0 Deployment</span>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {[
+                                    { layer: 1, title: 'Pre-Validation Workbench', icon: 'auto_stories', desc: 'Evidence-grounded insights to support validation scoping and triage.', path: '/layer-1-hub' },
+                                    { layer: 2, title: 'Independent Validation Engine', icon: 'microscope', desc: 'Structured workflows for foundation models and agentic systems.', path: '/layer-2-workbench' },
+                                    { layer: 3, title: 'Post-Go-Live Risk Oversight', icon: 'settings_input_component', desc: 'Real-time risk monitoring and automated revalidation triggers.', path: '/risk-monitoring' }
+                                ].map((item) => (
+                                    <div key={item.layer} className="group bg-surface-container-lowest rounded-lg botanical-shadow p-1 flex flex-col transition-transform hover:-translate-y-1">
+                                        <div className="p-6 space-y-4 flex-1">
+                                            <div className="flex justify-between items-start">
+                                                <div className="w-12 h-12 rounded bg-surface-container-high flex items-center justify-center text-primary">
+                                                    <span className="material-symbols-outlined text-3xl">{item.icon}</span>
+                                                </div>
+                                                <span className="px-2 py-0.5 rounded bg-tertiary-fixed text-[10px] font-bold text-tertiary uppercase tracking-wider">Layer {item.layer}</span>
+                                            </div>
+                                            <div>
+                                                <h4 className="text-lg font-bold font-manrope text-primary leading-tight">{item.title}</h4>
+                                                <p className="text-xs text-on-surface-variant mt-2 leading-relaxed">{item.desc}</p>
+                                            </div>
+                                        </div>
+                                        <div className="bg-surface-container-low p-4 rounded-b-lg group-hover:bg-primary/5 transition-colors">
+                                            <button onClick={() => navigate(item.path)} className="w-full flex justify-between items-center text-xs font-bold text-primary uppercase tracking-widest">
+                                                Open Module <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            );
+        };
+
+        // Screen 2: Layer 1 Hub
+        const Layer1HubPage = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="flex-1 flex flex-col min-w-0">
+                    <Header title="Layer 1: Pre-Validation Oversight" />
+                    <div className="p-8 max-w-[1600px] mx-auto space-y-8">
+                        <section className="space-y-6">
+                            <div className="flex items-baseline justify-between">
+                                <div>
+                                    <h3 className="font-headline text-3xl font-extrabold text-primary tracking-tight">Layer 1: Knowledge Hub</h3>
+                                    <p className="text-on-surface-variant mt-1">Driving architectural integrity through validation scoping and triage.</p>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-12 gap-0 overflow-hidden rounded-xl botanical-shadow">
+                                <div className="col-span-4 bg-primary px-8 py-6 text-white"><h4 className="font-bold">Phase 01: Active</h4></div>
+                                <div className="col-span-4 bg-surface-container-highest px-8 py-6"><h4 className="font-bold">Phase 02: Dev</h4></div>
+                                <div className="col-span-4 bg-surface-container-low px-8 py-6 opacity-70"><h4 className="font-bold">Phase 03: Roadmap</h4></div>
+                            </div>
+                        </section>
+
+                        <div className="grid grid-cols-12 gap-8">
+                            <div className="col-span-8">
+                                <div className="bg-surface-container-lowest rounded-xl botanical-shadow p-8 border-l-4 border-primary">
+                                    <div className="flex justify-between items-start mb-8">
+                                        <h4 className="text-2xl font-headline font-bold text-primary">Knowledge Base Workbench</h4>
+                                        <button onClick={() => navigate('/layer-1-workbench')} className="px-6 py-3 bg-primary text-white font-bold rounded-md shadow-sm">Launch Workbench</button>
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-6">
+                                        <div className="p-5 bg-surface-container rounded-lg">
+                                            <p className="text-[10px] font-bold text-on-surface-variant/60 uppercase">Scoping Queue</p>
+                                            <p className="text-2xl font-headline font-extrabold text-on-surface">1,284</p>
+                                        </div>
+                                        <div className="p-5 bg-surface-container rounded-lg">
+                                            <p className="text-[10px] font-bold text-on-surface-variant/60 uppercase">Triage Latency</p>
+                                            <p className="text-2xl font-headline font-extrabold text-on-surface">0.42s</p>
+                                        </div>
+                                        <div className="p-5 bg-surface-container rounded-lg">
+                                            <p className="text-[10px] font-bold text-on-surface-variant/60 uppercase">Gap Detection</p>
+                                            <p className="text-2xl font-headline font-extrabold text-on-surface">94.8%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-span-4">
+                                <div className="bg-surface-container-low rounded-xl p-6 border border-outline-variant/10">
+                                    <h5 className="text-xs font-bold text-primary uppercase mb-6">Confidence Score</h5>
+                                    <div className="text-center py-4">
+                                        <span className="text-6xl font-headline font-extrabold text-primary">92</span>
+                                        <p className="text-[10px] font-bold text-on-surface-variant/60 uppercase mt-2">High Integrity</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Screen 3: Layer 1 Workbench
+        const Layer1WorkbenchPage = () => (
+            <div className="flex-1 flex flex-col min-w-0">
+                <Header title="Knowledge Base Workbench" />
+                <div className="p-8 space-y-8 max-w-[1600px] overflow-y-auto">
+                    <section className="grid grid-cols-12 gap-6">
+                        <div className="col-span-8 bg-surface-container-lowest p-6 rounded botanical-shadow">
+                            <h3 className="font-headline text-xl font-bold mb-6">Backend Health Infrastructure</h3>
+                            <div className="grid grid-cols-4 gap-4">
+                                {['Vector DB', 'Ingestion Pipe', 'Model Load', 'API Sync'].map(s => (
+                                    <div key={s} className="space-y-1">
+                                        <span className="text-xs text-on-surface-variant/50 block">{s}</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full bg-primary"></div>
+                                            <span className="text-sm font-semibold">Active</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="col-span-4 bg-primary botanical-gradient p-6 rounded shadow-lg text-white">
+                            <h3 className="font-headline text-lg font-bold mb-4">Profile Readiness</h3>
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between p-3 bg-white/10 rounded-lg">
+                                    <span className="text-sm font-medium">Policy Workbench</span>
+                                    <span className="material-symbols-outlined text-primary-fixed">check_circle</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="grid grid-cols-12 gap-6">
+                        <div className="col-span-5 bg-surface-container-low p-6 rounded">
+                            <h4 className="text-sm font-bold mb-4 uppercase tracking-tighter">Ingest Local Repository</h4>
+                            <div className="space-y-4">
+                                <input className="w-full bg-surface-container-high border-none rounded py-2 text-sm font-mono" value="/mnt/storage/governance_docs_2024" />
+                                <button className="w-full py-2.5 botanical-gradient text-white rounded text-sm font-bold">Prepare KB Repository</button>
+                            </div>
+                        </div>
+                        <div className="col-span-7 bg-surface-container-lowest p-6 rounded border border-surface-variant/10">
+                            <h4 className="text-sm font-bold mb-4 uppercase">System Finding: PR-824</h4>
+                            <div className="bg-surface-container-low p-6 rounded space-y-4">
+                                <h5 className="font-headline font-bold text-primary">Model Drift Analysis</h5>
+                                <p className="text-sm leading-relaxed">Model prioritizing speed over structural safety checks in 14% of logs. Violates Rule 4.2.1.</p>
+                                <div className="p-3 bg-tertiary-fixed/20 border-l-4 border-tertiary rounded text-xs">
+                                    Initiate Layer 2 deep-scan on "Inference Validation" hooks.
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        );
+
+        // Screen 4: Layer 2 Independent Validation
+        const Layer2Page = () => (
+            <div className="flex-1 flex flex-col min-w-0">
+                <Header title="Layer 2: Independent Validation" />
+                <div className="p-8 space-y-8 max-w-[1600px] overflow-y-auto">
+                    <div className="flex justify-between items-end">
+                        <div>
+                            <h2 className="text-3xl font-headline font-extrabold tracking-tight text-on-surface">Validation Workbench</h2>
+                            <p className="text-on-surface-variant mt-2 font-body max-w-2xl">High-density technical audit environment for structural verification.</p>
+                        </div>
+                        <button className="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary rounded-lg font-bold text-xs shadow-md">
+                            <span className="material-symbols-outlined text-sm">play_arrow</span> Execute Test Suite
+                        </button>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-6">
+                        <div className="col-span-5">
+                            <div className="bg-surface-container-lowest p-6 rounded-xl botanical-shadow space-y-6">
+                                <h3 className="font-headline font-bold text-lg">Execution Engine</h3>
+                                <div className="space-y-4">
+                                    <div className="grid grid-cols-3 gap-2">
+                                        <button className="py-2.5 px-2 bg-surface-container-high border-2 border-primary rounded-lg text-xs font-bold">RAG System</button>
+                                        <button className="py-2.5 px-2 bg-surface-container-low rounded-lg text-xs">Foundation</button>
+                                        <button className="py-2.5 px-2 bg-surface-container-low rounded-lg text-xs">Agentic</button>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <div className="flex items-center justify-between p-3 bg-surface-container-low rounded-lg animate-pulse border-l-4 border-primary">
+                                            <span className="text-xs font-medium">TC-402: Adversarial Injection</span>
+                                            <span className="text-[10px] font-bold text-primary">IN-PROCESS</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-span-7">
+                            <div className="bg-surface-container-lowest p-6 rounded-xl botanical-shadow">
+                                <h3 className="font-headline font-bold text-lg mb-4">Root Cause Analysis</h3>
+                                <div className="font-mono text-[11px] leading-relaxed bg-on-surface text-[#eff6e7] p-4 rounded-lg h-64 overflow-y-auto">
+                                    <div className="text-primary-fixed mb-2">[TIMESTAMP: 14:02:44.221]</div>
+                                    <div className="bg-error/20 p-2 rounded mb-2 text-error-container">CRITICAL: Guardrail trigger detected in generation stream.</div>
+                                    <div className="opacity-80">Reason: Response contains non-sanitized account identifiers. Execution halted.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // Screen 5: Layer 3 Post-Go-Live
+        const Layer3Page = () => (
+            <div className="flex-1 flex flex-col min-w-0">
+                <Header title="Layer 3: Post-Go-Live Monitoring" />
+                <div className="p-8 max-w-[1600px] w-full mx-auto space-y-8 overflow-y-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div className="bg-surface-container-lowest p-6 rounded-lg botanical-shadow border-l-4 border-error">
+                            <p className="text-on-surface-variant text-xs font-label opacity-60 mb-1">Active Alerts</p>
+                            <h3 className="text-2xl font-black font-headline text-on-surface">03</h3>
+                            <p className="mt-4 text-[11px] font-semibold text-error">2 CRITICAL • 1 WARNING</p>
+                        </div>
+                        <div className="bg-surface-container-lowest p-6 rounded-lg botanical-shadow">
+                            <p className="text-on-surface-variant text-xs font-label opacity-60 mb-1">Model Drift Index</p>
+                            <h3 className="text-2xl font-black font-headline text-on-surface">0.142</h3>
+                            <div className="mt-4 h-1 bg-surface-container-high rounded-full"><div className="bg-error h-full w-[72%]"></div></div>
+                        </div>
+                        <div className="bg-surface-container-lowest p-6 rounded-lg botanical-shadow">
+                            <p className="text-on-surface-variant text-xs font-label opacity-60 mb-1">Monitoring Score</p>
+                            <h3 className="text-2xl font-black font-headline text-on-surface">98.2%</h3>
+                        </div>
+                        <div className="bg-primary botanical-gradient p-6 rounded-lg text-white">
+                            <h4 className="font-headline font-bold text-xs uppercase opacity-80">Governance Health</h4>
+                            <p className="text-3xl font-black font-headline">A+</p>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div className="lg:col-span-2 bg-surface-container-lowest p-8 rounded-lg botanical-shadow">
+                            <h3 className="font-headline font-bold text-lg mb-6">Model Change History</h3>
+                            <table className="w-full text-left">
+                                <thead className="bg-surface-container-low">
+                                    <tr>
+                                        <th className="px-6 py-3 text-[10px] uppercase font-bold text-on-surface-variant/70">Version</th>
+                                        <th className="px-6 py-3 text-[10px] uppercase font-bold text-on-surface-variant/70">Date</th>
+                                        <th className="px-6 py-3 text-[10px] uppercase font-bold text-on-surface-variant/70">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-outline-variant/10">
+                                    <tr>
+                                        <td className="px-6 py-4 text-xs font-bold text-primary">v2.4.1-rc</td>
+                                        <td className="px-6 py-4 text-xs">Oct 24, 2023</td>
+                                        <td className="px-6 py-4"><span className="px-2 py-0.5 rounded-full bg-primary-fixed text-[10px] font-bold">ACTIVE</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="bg-surface-container-lowest p-6 rounded-lg botanical-shadow">
+                            <h3 className="font-headline font-bold text-base mb-4">Revalidation Triggers</h3>
+                            <div className="p-3 bg-error-container/30 rounded-lg border border-error/10">
+                                <div className="flex justify-between items-start mb-1">
+                                    <span className="text-[10px] font-black text-error font-headline uppercase">THRESHOLD BREACH</span>
+                                    <span className="text-[9px] text-on-surface-variant">4h ago</span>
+                                </div>
+                                <p className="text-xs font-bold text-on-surface mb-2">Drift Anomaly in 'Compliance'</p>
+                                <button className="w-full bg-error text-white text-[9px] font-bold rounded py-1.5">ACT NOW</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const App = () => {
+            return (
+                <MemoryRouter>
+                    <Sidebar />
+                    <Routes>
+                        <Route path="/" element={<DashboardPage />} />
+                        <Route path="/layer-1-hub" element={<Layer1HubPage />} />
+                        <Route path="/layer-1-workbench" element={<Layer1WorkbenchPage />} />
+                        <Route path="/layer-2-workbench" element={<Layer2Page />} />
+                        <Route path="/risk-monitoring" element={<Layer3Page />} />
+                    </Routes>
+                </MemoryRouter>
+            );
+        };
+
+        const container = document.getElementById('root');
+        const root = createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>
