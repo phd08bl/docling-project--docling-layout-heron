@@ -1,0 +1,107 @@
+Yes — that example is giving away too much.
+
+For a **candidate-facing pre-interview example**, it is better to keep it **very simple and generic**, so candidates understand the **format** and the **type of thinking expected**, without being coached toward your real interview topics.
+
+A better approach is to use a lightweight example like a **simple internal Q&A tool, document helper, or workflow assistant**, and frame it around how they would think about building a small **RAG or agent demo/tool** end to end.
+
+Here is a cleaner version you can use.
+
+---
+
+# MRO AI Candidate Interview
+
+## Case Studies – Example
+
+## Introduction
+
+As part of the interview, you will be asked to review and discuss a **case study** describing an AI tooling or workflow automation scenario.
+
+This document provides **an example only**.
+The **actual case study will be different**, but the **format and expectations will be similar**.
+
+The purpose of the case study is to understand how you approach the design of an **end-to-end AI solution**, such as a **RAG application**, a **simple AI tool**, or an **agent-based workflow**, from an **AI Tech & Tooling perspective**.
+
+---
+
+## Interview format for the case study
+
+The case study discussion will take place within a **50-minute interview**.
+
+The expected format is:
+
+* **5 minutes** to read and think about the scenario
+* **10–15 minutes** to talk through your initial approach
+* **20–25 minutes** of follow-up discussion and deeper questions from the interviewers
+* **5–10 minutes** for discussion on delivery approach, trade-offs, and prioritisation
+
+You may make notes on paper if helpful, but **not on an electronic device**.
+
+---
+
+## What we are looking for
+
+Please consider the example from an **AI Tech & Tooling / solution design perspective**. For example:
+
+* How you would approach building the solution **end to end**
+* What architecture, workflow, or components you would prioritise
+* How you would think about **data, prompts, retrieval, tools, orchestration, evaluation, and controls**
+* Where a **simple RAG pipeline** might be enough, and where an **agent-based approach** may or may not be justified
+* What trade-offs, risks, or delivery challenges you would want to understand
+
+The aim is to understand how you **approach practical AI solution design and delivery**, even in unfamiliar situations.
+
+There is no single “right” answer — we are interested in your **reasoning, judgement, and prioritisation**.
+
+---
+
+## Clarifications
+
+* By **AI Tech & Tooling perspective**, we mean thinking about whether the proposed solution is:
+
+  * appropriate for the problem
+  * technically sound and feasible
+  * robust, controllable, and supportable in practice
+  * designed in a way that can be evaluated, improved, and operated over time
+
+* You do **not** need to cover everything — focus on the areas you think are **most important**
+
+* You do **not** need specialist banking knowledge
+
+* We are **not** expecting production-ready code in the interview, but we do expect you to think in a way that reflects how you would build or lead delivery of a solution in practice
+
+---
+
+# Case Study Example — Internal Document Help Tool
+
+## System outline
+
+* A team wants to build a small internal AI tool to help users ask questions about a set of internal documents.
+* The documents are stored in a few common formats such as PDF, Word, or web pages.
+* The tool should return short answers and, where possible, point users to the relevant source material.
+* The team is considering whether a **simple RAG-based design** would be enough, or whether a slightly more **agent-like workflow** is needed.
+* The solution is still at an early stage, and the design has not yet been finalised.
+
+## Your task
+
+Describe the **main considerations** you would focus on when designing this solution from an **AI Tech & Tooling perspective**.
+
+You might consider, for example:
+
+* How you would approach the solution **end to end**
+* What the main components of the solution would be
+* What data preparation or document processing might be needed
+* Whether a **simple RAG approach** would be sufficient
+* In what situations an **agent or tool-using workflow** might be useful
+* How you would think about **testing, evaluation, and controls**
+* What you would prioritise for an **initial MVP**
+
+---
+
+This version is much safer because it:
+
+* shows the **format**
+* signals that candidates may be asked about **RAG or agents**
+* tests **solution design thinking**
+* does **not** reveal your actual interview themes like policy/guidance, validation review, complex multi-document reasoning, or internal risk workflows
+
+I can also rewrite it in a style that matches Rachel’s IVT example even more closely, so it looks like the same family of interview document.

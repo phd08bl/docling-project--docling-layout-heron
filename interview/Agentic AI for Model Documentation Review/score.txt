@@ -1,0 +1,802 @@
+Below is a practical **assessment framework** you can use across both:
+
+* the **main case study questions**
+* the **12 High-Value Practical Challenge Questions**
+
+I’ve structured it so you can score consistently during interview and quickly distinguish:
+
+* genuine hands-on candidates
+* strong but more conceptual candidates
+* weak / buzzword-driven candidates
+
+---
+
+# 1. Overall scoring rubric
+
+Use a **1–5 scale** for each question or dimension.
+
+## Score 5 — Strong
+
+* Clear, structured, practical answer
+* Shows real implementation judgement
+* Understands trade-offs and failure modes
+* Distinguishes automation vs human judgement well
+* Thinks in workflows, states, objects, traceability, and controls
+* Gives concrete examples of system behavior
+
+## Score 4 — Good
+
+* Strong conceptual answer with solid practical thinking
+* Covers most important points
+* Some implementation depth, though not always highly specific
+* Minor gaps, but overall credible and usable
+
+## Score 3 — Acceptable
+
+* Reasonable answer, but more high-level than practical
+* Understands core ideas, but limited system-design depth
+* Some important points missing
+* Could likely contribute, but may need support in delivery
+
+## Score 2 — Weak
+
+* Partial understanding only
+* Generic or vague response
+* Misses important control, workflow, or practical considerations
+* Relies too much on buzzwords or surface-level RAG/agent language
+
+## Score 1 — Poor
+
+* Does not understand the problem well
+* Treats the case like a generic chatbot
+* No clear separation of rules, retrieval, LLMs, human review
+* No practical design, controls, or delivery thinking
+
+---
+
+# 2. Main case study questions: scoring rubric + strong / weak signals
+
+---
+
+## Q1. Product framing
+
+**How would you define this product, and what problem is it solving for a model validation team?**
+
+### Scoring rubric
+
+**5:** Frames it clearly as a **review support platform** for standards-driven documentation review, focused on consistency, evidence gaps, follow-up, repeat review, and validator support without replacing judgement.
+**3:** Understands it as a documentation review tool, but more like document Q&A or summarisation support.
+**1:** Frames it as a generic chatbot over uploaded documents.
+
+### Strong answer signals
+
+* Says this is **not a general chatbot**
+* Focuses on **review workflow**
+* Mentions **evidence sufficiency**, **documentation gaps**, **follow-up**
+* Mentions **repeat review / resubmission**
+* Says platform should improve **consistency and efficiency**, not replace validators
+
+### Weak answer signals
+
+* Says “it answers questions over documents”
+* Focuses only on search, summarisation, or chatbot UX
+* No mention of standards / expectations / review workflow
+* No mention of evidence gaps or repeated review
+* Implies LLM can make final validation judgement
+
+---
+
+## Q2. User journeys
+
+**What are the main user journeys in this platform?**
+
+### Scoring rubric
+
+**5:** Describes a full lifecycle: upload, setup, review run, evidence drill-down, comment/override, resubmission, rerun, compare versions, close/archive.
+**3:** Covers upload and review, but misses rerun, version comparison, or close-out flows.
+**1:** Only describes asking questions about documents.
+
+### Strong answer signals
+
+* Upload / intake
+* Review run
+* Review findings
+* Evidence drill-down
+* Comment / override
+* Resubmission / rerun
+* Compare versions
+* Close / archive
+
+### Weak answer signals
+
+* Only talks about one-step “upload and get answer”
+* No reviewer workflow
+* No override / comment flow
+* No iterative review cycle
+* No archive / history
+
+---
+
+## Q3. End-to-end architecture
+
+**How would you design the end-to-end architecture?**
+
+### Scoring rubric
+
+**5:** Breaks architecture into clear layers: ingestion, parsing, normalisation, chunking/section mapping, review orchestration, rules, optional retrieval, semantic checks, findings store, UI/API, persistence, audit/logging.
+**3:** Covers some major components, but lacks modular separation or persistence/audit depth.
+**1:** Mentions only vector DB + LLM + frontend.
+
+### Strong answer signals
+
+* Clear layered architecture
+* Separates parsing, orchestration, persistence
+* Talks about core objects and services
+* Includes findings store and audit trail
+* Includes UI / API / export / reporting
+
+### Weak answer signals
+
+* Only says “store embeddings and ask model”
+* No persistence design
+* No orchestration logic
+* No findings object model
+* No separation of concerns
+
+---
+
+## Q4. Rules, retrieval, LLMs, and human review
+
+**Where should deterministic rules, retrieval, LLM semantic reasoning, and human review each fit?**
+
+### Scoring rubric
+
+**5:** Clearly separates each role and gives realistic examples of what belongs where; keeps final judgement with humans.
+**3:** Understands some separation, but overlaps components or leaves too much to the LLM.
+**1:** Treats the LLM as the primary engine for everything.
+
+### Strong answer signals
+
+* Rules for completeness / structure / metadata
+* Retrieval for standards / expectations / guidance
+* LLM for clarity / consistency / sufficiency / mapping
+* Human for sign-off / override / ambiguity / materiality
+* States clearly what should **never** be left solely to the model
+
+### Weak answer signals
+
+* “Let the model check everything”
+* No clear role for rules
+* No retrieval role beyond generic context stuffing
+* Lets agent produce final validation conclusion
+* No human-in-the-loop boundary
+
+---
+
+## Q5. Why agentic AI here?
+
+**Why is this an agentic AI use case rather than a simple pipeline or one-shot prompt?**
+
+### Scoring rubric
+
+**5:** Explains where adaptive routing, stateful reruns, multi-step review, requirement-based tool use, and human loop justify agentic behavior, while avoiding over-engineering.
+**3:** Understands there are multiple steps, but gives fuzzy reasons for “agentic.”
+**1:** Says it is agentic just because it uses an LLM and tools.
+
+### Strong answer signals
+
+* Multiple steps
+* Branching logic
+* Adaptive tool use
+* Requirement-based routing
+* Human input and reruns
+* Stateful workflow
+* Also knows when deterministic pipeline is enough
+
+### Weak answer signals
+
+* Agentic = “fancier AI”
+* No explanation of what is adaptive
+* No workflow/state reasoning
+* Wants agent for everything
+* No awareness of complexity cost
+
+---
+
+## Q6. Parsing and evidence traceability
+
+**How would you design parsing and evidence traceability for long model documents?**
+
+### Scoring rubric
+
+**5:** Discusses parser/OCR choice by document type, structure preservation, tables/appendices, anchors/page references, extraction quality checks, and evidence linkage.
+**3:** Understands parsing matters, but gives only generic OCR / text extraction comments.
+**1:** Assumes documents can simply be embedded as raw text.
+
+### Strong answer signals
+
+* Parser choice depends on file type and quality
+* OCR only when needed
+* Preserve headings, sections, tables, appendices
+* Preserve page / anchor / source references
+* Extraction quality gating
+* Traceability from findings back to source
+
+### Weak answer signals
+
+* “Just OCR it”
+* No structure preservation
+* No table/appendix handling
+* No extraction quality checks
+* No grounding back to original doc
+
+---
+
+## Q7. Chunking and review unit design
+
+**How would you split documents into review units without losing validation context?**
+
+### Scoring rubric
+
+**5:** Proposes section-aware, hierarchy-aware chunking with metadata and different treatment for narrative vs tabular evidence; addresses cross-section consistency risks.
+**3:** Understands chunking matters, but falls back on token-size-only logic.
+**1:** Uses arbitrary fixed-size chunking with no regard for document structure.
+
+### Strong answer signals
+
+* Section-aware chunking
+* Hierarchy-aware chunking
+* Document-schema-aware if possible
+* Keeps evidence linkage and section metadata
+* Avoids splitting logical units badly
+* Recognises some checks must span sections/documents
+
+### Weak answer signals
+
+* “Chunk every 500 tokens”
+* No section context
+* No handling for narrative vs tables
+* No cross-section consistency thinking
+* No debugging approach for chunking failures
+
+---
+
+## Q8. Structured findings
+
+**What should a structured review finding look like?**
+
+### Scoring rubric
+
+**5:** Describes a concrete schema with IDs, run/document references, category, severity, rule/review-pack refs, evidence links, rationale, recommendations, status, comments, timestamps.
+**3:** Understands findings should be structured, but schema is incomplete.
+**1:** Only describes narrative text output.
+
+### Strong answer signals
+
+* finding_id / run_id
+* category / severity
+* rule or review-pack reference
+* description / rationale
+* evidence reference(s)
+* recommendation / next action
+* status
+* reviewer decision / comment
+* timestamps
+
+### Weak answer signals
+
+* Only suggests free-text summary
+* No evidence fields
+* No reviewer action fields
+* No status / lifecycle
+* No distinction between deterministic and inferred concerns
+
+---
+
+## Q9. Repeat review cycles and persistence
+
+**How would you support repeated review after the model owner updates documents?**
+
+### Scoring rubric
+
+**5:** Explains versioning, run lineage, delta comparison, resolved/reopened findings, preservation of comments/overrides, and targeted vs full rerun logic.
+**3:** Recognises reruns matter, but persistence and lineage design are weak.
+**1:** Treats review as a one-shot process.
+
+### Strong answer signals
+
+* Document versioning
+* Review run lineage
+* Delta comparison
+* Resolved / reopened / unchanged findings
+* Preserve comments and overrides
+* Partial rerun where appropriate
+* Clear case-level vs run-level data
+
+### Weak answer signals
+
+* No history model
+* Rerun just overwrites old results
+* Overrides disappear
+* No version comparison
+* No notion of reopened findings
+
+---
+
+## Q10. Controls and evaluation
+
+**What are the main risks in this platform, and how would you evaluate quality?**
+
+### Scoring rubric
+
+**5:** Identifies parser/rule/model/control risks and proposes evaluation across benchmark cases, expected findings, evidence correctness, acceptance/override rates, rerun consistency, and SME review.
+**3:** Mentions some risks and vague evaluation, but lacks practical measurement design.
+**1:** Says “test accuracy” without specifics.
+
+### Strong answer signals
+
+* Parser errors
+* Wrong rules
+* Hallucinated findings
+* Weak evidence linkage
+* False sense of completeness
+* Stale standards
+* Access control
+* Inconsistent reruns
+* Benchmark datasets
+* Expected findings
+* Evidence correctness
+* Acceptance / override rates
+* Rerun consistency
+
+### Weak answer signals
+
+* Only mentions hallucination
+* No parser/rules/governance risk
+* No benchmark idea
+* No reviewer/SME feedback loop
+* No practical metrics
+
+---
+
+## Q11. Delivery leadership
+
+**If you were leading this workstream, what would you deliver in the first 8–12 weeks?**
+
+### Scoring rubric
+
+**5:** Proposes a tightly scoped MVP with one or two document types, one review pack, basic parsing, structured findings, evidence drill-down, comments/overrides, persistent history, exportable report, and sensible sequencing.
+**3:** Has some roadmap thinking, but scope is too broad or too vague.
+**1:** Either no MVP thinking or proposes a full end-state platform immediately.
+
+### Strong answer signals
+
+* Narrow MVP
+* One or two document types first
+* One review pack first
+* Basic parsing + findings + evidence drill-down
+* Comments and override
+* Persistent history
+* Exportable report
+* Pilot then controlled rollout
+
+### Weak answer signals
+
+* Tries to do everything at once
+* No prioritisation
+* No team/dependency awareness
+* No pilot strategy
+* No deliberate exclusions from MVP
+
+---
+
+# 3. High-Value Practical Challenge Questions: scoring rubric + strong / weak signals
+
+---
+
+## Practical 1. Rules vs semantic interpretation conflict
+
+### Scoring rubric
+
+**5:** Keeps deterministic and semantic signals separate, marks ambiguity explicitly, shows both to reviewer, and does not silently override the rule.
+**3:** Recognises conflict but gives a generic “ask user/reviewer to decide.”
+**1:** Lets the LLM override the deterministic result automatically.
+
+### Strong answer signals
+
+* Separate finding types/bases
+* Mapping ambiguity classification
+* Evidence shown side by side
+* Reviewer confirmation required
+* Improvement loop for mapping logic later
+
+### Weak answer signals
+
+* “Trust the LLM if it seems reasonable”
+* One result overwrites the other
+* No explicit ambiguity state
+* No reviewer-facing behavior described
+
+---
+
+## Practical 2. Parser failure on critical appendix/table
+
+### Scoring rubric
+
+**5:** Uses extraction quality gating, blocks/downgrades dependent checks, allows unaffected checks to continue, requests manual intervention, and avoids fabricated certainty.
+**3:** Recognises parser issue but only says “flag an error.”
+**1:** Continues review as normal and generates confident findings.
+
+### Strong answer signals
+
+* Extraction quality flag
+* Dependent checks blocked or downgraded
+* Unaffected checks may continue
+* Manual review / better upload requested
+* Parser failure logged clearly
+
+### Weak answer signals
+
+* Ignores extraction confidence
+* Treats all checks equally
+* Still produces strong findings from corrupted table
+* No degradation/fallback logic
+
+---
+
+## Practical 3. Binding findings to source location
+
+### Scoring rubric
+
+**5:** Preserves parse-time anchors such as page, section, chunk ID, bbox/table cell refs; stores these in finding schema and supports source drill-down.
+**3:** Mentions citations or page numbers only.
+**1:** No real source-grounding approach.
+
+### Strong answer signals
+
+* Page / section / anchor / chunk ID
+* Bbox or cell refs where possible
+* Parse-time artifact preservation
+* Finding schema includes evidence refs
+* Supports source highlighting
+
+### Weak answer signals
+
+* “Just add citation text”
+* No parse-time planning
+* No precision handling
+* No source navigation behavior
+
+---
+
+## Practical 4. Right standard retrieved, poor final comment
+
+### Scoring rubric
+
+**5:** Debugs in layers with traces/logs: retrieval, reranking, requirement mapping, chunking, prompt assembly, truncation, citation mismatch, schema/post-processing.
+**3:** Says “inspect prompt and retrieval” but not much deeper.
+**1:** Immediately changes model or prompt without diagnosis.
+
+### Strong answer signals
+
+* Layered debug strategy
+* Trace/run ID usage
+* Requirement mapping inspection
+* Evidence-summary mismatch analysis
+* Doesn’t jump straight to model swap
+
+### Weak answer signals
+
+* “Tune the prompt”
+* “Use a better model”
+* No traceability
+* No structured failure analysis
+
+---
+
+## Practical 5. OCR/text+retrieval vs end-to-end VLM
+
+### Scoring rubric
+
+**5:** Explains trade-offs around token cost, document length, chunking control, traceability, auditability, section handling, and balanced VLM use cases.
+**3:** Gives one-sided answer with some correct points.
+**1:** Treats newer multimodal models as automatically better.
+
+### Strong answer signals
+
+* Token/cost awareness
+* Better evidence traceability
+* Better section/chunk control
+* Easier auditability
+* Balanced judgement on when VLM still helps
+
+### Weak answer signals
+
+* “Use VLM for everything”
+* No traceability argument
+* No long-document or cost thinking
+* No document-control perspective
+
+---
+
+## Practical 6. Reviewer override reappears on rerun
+
+### Scoring rubric
+
+**5:** Preserves override as an explicit historical decision, separates new system result from old reviewer decision, and uses reconciliation states like reopened/previously overridden.
+**3:** Understands overrides should not disappear, but lacks concrete rerun logic.
+**1:** New rerun simply replaces prior human decision.
+
+### Strong answer signals
+
+* Override stored explicitly
+* New and prior states both visible
+* Reconciliation logic
+* Historical lineage preserved
+* Different treatment for changed vs unchanged content
+
+### Weak answer signals
+
+* Overrides lost
+* Auto-reapply without conditions
+* No lineage
+* No reopened state
+
+---
+
+## Practical 7. Full rerun vs impacted rerun
+
+### Scoring rubric
+
+**5:** Uses diffing and dependency logic, reruns impacted checks first, reruns global consistency checks when needed, and falls back to full rerun when confidence is weak.
+**3:** Understands the trade-off but no concrete dependency logic.
+**1:** Always reruns everything or always reruns only changed sections without nuance.
+
+### Strong answer signals
+
+* Section-level diffing
+* Check dependency awareness
+* Global vs local rerun distinction
+* Safe fallback to full rerun
+* Balances efficiency and correctness
+
+### Weak answer signals
+
+* No dependency thinking
+* Overly simplistic rerun policy
+* No fallback conditions
+* No confidence/uncertainty handling
+
+---
+
+## Practical 8. Cross-document inconsistency
+
+### Scoring rubric
+
+**5:** Creates explicit cross-document consistency finding, cites both sources, avoids false certainty, and escalates to reviewer/follow-up when needed.
+**3:** Notices inconsistency, but response is vague.
+**1:** Chooses one document arbitrarily or ignores inconsistency.
+
+### Strong answer signals
+
+* Structured cross-document finding
+* Both sources referenced
+* No forced auto-resolution
+* Reviewer follow-up / escalation
+* Optional targeted consistency checks
+
+### Weak answer signals
+
+* Picks one answer without basis
+* No structured finding
+* No reviewer review step
+* No evidence comparison
+
+---
+
+## Practical 9. Too many low-value findings
+
+### Scoring rubric
+
+**5:** Uses override/dismissal/acceptance metrics, parser and chunking review, rule/prompt tuning, scope tightening, and distinction between observations and findings.
+**3:** Recognises precision/noise issue, but improvement plan is vague.
+**1:** Only suggests using a better model or fine-tuning.
+
+### Strong answer signals
+
+* Noise diagnosis by finding type
+* Reviewer behavior metrics
+* Parser/chunking inspection
+* Precision-focused refinement
+* Separates informational observations from findings
+
+### Weak answer signals
+
+* “Fine-tune the model”
+* No metrics
+* No analysis by category
+* No threshold/scope control
+
+---
+
+## Practical 10. Logging for debug, audit, and improvement
+
+### Scoring rubric
+
+**5:** Proposes comprehensive observability including IDs, versions, parser outputs/confidence, rule versions, retrieval hits, prompts, outputs, findings lifecycle, overrides, lineage, and distinguishes audit vs debug logs.
+**3:** Mentions logs generally, but not what should be logged.
+**1:** No clear observability plan.
+
+### Strong answer signals
+
+* Case / submission / version / run IDs
+* Parser artifacts/confidence
+* Rule/review-pack versioning
+* Retrieval and prompt traces
+* Findings lifecycle
+* Comments / overrides
+* Rerun lineage
+* Audit vs debug distinction
+
+### Weak answer signals
+
+* “Log errors”
+* No entity/version awareness
+* No prompt/retrieval traces
+* No audit trail concept
+
+---
+
+## Practical 11. Confidence without false reassurance
+
+### Scoring rubric
+
+**5:** Avoids naive confidence score, prefers interpretable reliability signals like extraction quality, evidence coverage, inferred vs deterministic basis, ambiguity/conflict flags, and “needs reviewer confirmation.”
+**3:** Understands confidence is tricky, but answer remains generic.
+**1:** Suggests a single model confidence score as the main control.
+
+### Strong answer signals
+
+* Interpretable reliability signals
+* “Insufficient evidence” state
+* Extraction quality and evidence coverage
+* Ambiguity/conflict indicators
+* Reviewer confirmation flags
+
+### Weak answer signals
+
+* One opaque confidence number
+* False precision
+* No reliability decomposition
+* No ambiguity state
+
+---
+
+## Practical 12. 6-week MVP: hard-coded vs configurable
+
+### Scoring rubric
+
+**5:** Shows pragmatic sequencing: hard-codes narrow scope for speed, keeps selected components configurable for future growth, and avoids premature platform overbuild.
+**3:** Has some MVP thinking, but config vs hard-code split is weak.
+**1:** Either over-engineers a configurable platform immediately or hard-codes everything with no evolution path.
+
+### Strong answer signals
+
+* One review pack
+* One or two document types
+* Limited workflow states/checks
+* Simple finding schema
+* Prompts / rule wording / pack definitions configurable where sensible
+* Clear delivery pragmatism
+
+### Weak answer signals
+
+* Build full platform first
+* No MVP boundary
+* No configurability thinking
+* No practical trade-off awareness
+
+---
+
+# 4. Recommended score dimensions for the whole interview
+
+If you want a simpler way to score across all questions, use these **6 dimensions** and score each 1–5.
+
+## 1. Product framing and workflow understanding
+
+### Strong signals
+
+* Understands this is a review platform, not chatbot
+* Clear lifecycle and user journey thinking
+
+### Weak signals
+
+* Generic document Q&A framing
+
+## 2. Practical system design depth
+
+### Strong signals
+
+* Concrete architecture, object model, persistence, findings schema
+
+### Weak signals
+
+* High-level component listing only
+
+## 3. Agentic workflow judgement
+
+### Strong signals
+
+* Knows when adaptive orchestration helps and when it does not
+
+### Weak signals
+
+* Agentic buzzwords with no control or state logic
+
+## 4. Evidence traceability and controls
+
+### Strong signals
+
+* Source grounding, extraction quality, auditability, HITL boundaries
+
+### Weak signals
+
+* No traceability or governance thinking
+
+## 5. Debugging and operational thinking
+
+### Strong signals
+
+* Layered failure analysis, logs, traces, rerun logic, fallback behavior
+
+### Weak signals
+
+* Only says “change model/prompt”
+
+## 6. Delivery leadership and pragmatism
+
+### Strong signals
+
+* Narrow MVP, prioritisation, phased rollout, dependency awareness
+
+### Weak signals
+
+* Big-bang design, no sequencing
+
+---
+
+# 5. Overall strong candidate profile
+
+A strong candidate usually:
+
+* frames the product as a **standards-driven review platform**
+* separates **rules, retrieval, semantic reasoning, and human decisions**
+* understands **parsing, chunking, evidence mapping, reruns, and persistence**
+* answers practical questions in terms of:
+
+  * system behavior
+  * reviewer experience
+  * what gets stored
+  * how the platform degrades safely
+* shows **debugging discipline**
+* shows **MVP judgement**
+* avoids overclaiming what AI should automate
+
+# 6. Overall weak candidate profile
+
+A weak candidate usually:
+
+* treats everything as generic RAG/chatbot
+* overuses buzzwords like agent, vector DB, prompt engineering
+* does not discuss:
+
+  * reviewer override
+  * reruns
+  * evidence traceability
+  * structured findings
+  * audit trail
+* lets the LLM make final decisions
+* cannot explain failure handling or operational debugging
+* has no prioritised MVP or rollout thinking
+
+If you want, I can turn this into a clean **interviewer scorecard template** with checkboxes and 1–5 rating fields.

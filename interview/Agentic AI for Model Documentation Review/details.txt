@@ -1,0 +1,803 @@
+可以。下面我把这份 PDF 里的可用点，整理成一版 **50 分钟正式 case study interview pack**，并且把场景改成 **符合 model validation team 做 model documentation review** 的版本，而不是法务合同审核版本。
+
+这版 pack 不是照搬 PDF，而是做了三层转化：
+
+1. **保留 PDF 里最有价值的技术骨架**：文档解析、规则审核、结构化输出、坐标追溯、多 Agent 编排、报告导出。PDF 明确把系统拆成“输入 PDF → MinerU 解析 → LangChain 审核 → 输出问题列表”，并强调输出可用于前端高亮与整改。
+2. **把审核对象改成 model validation documentation review**：例如模型说明文档、方法论、测试证据、监控材料、变更记录、模型清单附件等。
+3. **补上企业级审查平台要素**：人工介入、复审、状态持久化、审计记录、版本对比、review pack、evidence traceability。这些是 PDF demo 里只有雏形、但你实际面试最需要考的。PDF 里已经出现了“历史记录”“导出报告”“问题列表”“多 Agent 校验”“坐标追溯”等基础元素。
+
+---
+
+# 50分钟 Case Study Interview Pack
+
+## Agentic AI for Model Documentation Review
+
+---
+
+## 1. 面试目标
+
+这套 case study 主要考察候选人是否具备以下能力：
+
+### A. 理解 validation team 的文档审核场景
+
+候选人是否理解这不是普通问答，也不是一般知识库检索，而是 **基于审查标准、证据要求、整改闭环** 的 model documentation review。PDF 中也强调，文档审核系统的核心不是简单 OCR，而是按“预设规则 + 自定义规则”输出结构化问题列表。
+
+### B. 理解 agentic AI 在审核流程中的作用
+
+PDF 里明确指出，文档审核 Agent 的价值在于 **自主推理、工具调用、多步判断**，并给出“先提取信息，再检索外部知识，再核对系统，再综合判断”的例子。
+
+### C. 能把系统设计成审核平台，而不是 demo
+
+PDF 展示了多 Agent 校验、Orchestrator、结构化输出、导出报告、历史记录、坐标追溯等关键雏形。
+你要看候选人能否把这些提升成：
+
+* review case lifecycle
+* repeated review cycles
+* human override
+* version lineage
+* auditability
+
+### D. 有 practical implementation depth
+
+PDF 里已经覆盖了很多可考的实现点，例如：
+
+* MinerU API 解析流程
+* JSON 结构兼容提取
+* 带坐标的 chunking
+* OCR error cleaning
+* rules + prompt + structured output
+* multi-agent orchestration。
+
+### E. 有 workstream lead 能力
+
+不仅能讲技术，还能讲：
+
+* MVP
+* review pack strategy
+* rollout sequencing
+* SMEs / validators / engineering collaboration
+* controls and evaluation
+
+---
+
+## 2. 面试时间安排（50分钟）
+
+### 0–5 分钟
+
+候选人阅读 case brief
+
+### 5–10 分钟
+
+候选人独立思考
+
+### 10–24 分钟
+
+候选人讲解方案
+
+### 24–44 分钟
+
+deep dive 追问
+
+### 44–50 分钟
+
+leadership / delivery / wrap-up
+
+---
+
+## 3. Candidate Case Brief
+
+这部分可以直接给候选人。
+
+---
+
+### Case Study: Design an AI Platform for Model Documentation Review
+
+You are asked to design an internal **AI-assisted Model Documentation Review Platform** for a model validation team.
+
+The platform is intended to support the review of model documentation submitted for validation, such as:
+
+* model development documents
+* methodology documents
+* validation evidence packs
+* testing summaries
+* monitoring and change records
+* implementation / architecture notes
+* supporting annexes and templates
+
+This is **not** a simple OCR tool, and **not** a standard chatbot or generic RAG assistant.
+
+The target platform should support an end-to-end review workflow:
+
+* ingest uploaded model documentation files
+* extract and structure content from PDF, Word, PowerPoint, or templates
+* review the submission against defined expectations, standards, and review rules
+* identify gaps, inconsistencies, missing evidence, unclear claims, and areas requiring follow-up
+* allow validators to inspect source evidence behind each finding
+* allow human reviewer intervention, comment, and override
+* support repeated review cycles after document updates
+* maintain persistent records of review runs, findings, comments, and outcomes over time
+
+Assume:
+
+* some checks are deterministic and rules-based
+* some checks require LLM-assisted semantic judgement
+* some questions may require retrieval from policy / standards / review guidance
+* outputs must be explainable, auditable, and evidence-linked
+* the system should evolve from an MVP into a broader review platform
+
+Please explain:
+
+1. how you would define the product and key user journeys
+2. what the MVP should include
+3. how you would design the architecture and agent workflow
+4. where rules, tools, retrieval, LLM reasoning, and human review fit together
+5. how you would support persistence, review history, and repeated review cycles
+6. what controls, risks, and evaluation approach you would use
+7. how you would lead delivery of this workstream
+
+---
+
+## 4. Interviewer framing note
+
+这份 case 的关键，是让候选人意识到：
+
+* 它不是“问答”
+* 它不是“帮我总结文档”
+* 它是一个 **validation review workflow system**
+
+PDF 的课程版本里，系统被定义为对专业文档按规则自动检查并输出结构化问题列表；在合同场景下，重点是“保留坐标、可追溯、可定位、可修改”。这些思路迁移到 model documentation review 非常自然。
+
+---
+
+## 5. Interviewer opening script
+
+你可以直接这样说：
+
+> We’d like you to think through the design of an AI-assisted platform for model documentation review.
+> This is not a chatbot and not a simple document parser. It is a review-oriented system for a model validation team. It should ingest model documentation, extract content, review against expectations and review rules, generate structured findings with evidence, allow human reviewer intervention, support repeated review cycles, and maintain persistent records over time.
+>
+> Please take a few minutes to think, then walk us through:
+>
+> * the product you would build
+> * the user workflow
+> * the architecture and agent design
+> * what should be automated versus reviewed by humans
+> * and how you would deliver this as a practical workstream
+
+---
+
+## 6. What “good” candidate coverage should include
+
+候选人理想上应覆盖这些点：
+
+* 文档审核平台，不是 chatbot
+* review pack / expectations / standards-driven 审查
+* 文档解析 + 坐标 / evidence traceability
+* rules + semantic judgement + retrieval
+* structured findings schema
+* repeated review cycle
+* human-in-the-loop
+* persistent audit trail
+* MVP 和后续路线
+
+这些点都能在 PDF 里找到技术雏形：
+PDF 展示了规则设计、带坐标的 chunking、issues/modifications/summary/risk-level 结构化输出、多 Agent + Orchestrator、报告生成与历史记录。
+
+---
+
+# 7. Core interview questions
+
+---
+
+## Q1. Product framing
+
+**How would you define this product, and what problem is it solving for a model validation team?**
+
+### 想听到的内容
+
+* 是 model documentation review platform
+* 不是 generic search assistant
+* 核心是 review findings、evidence traceability、follow-up、repeat review
+* 目标是提升 consistency、coverage、efficiency，而不是替代 validator judgement
+
+### 为什么这题重要
+
+PDF 里同样把系统定义成“按规则对专业文档进行内容和格式检查，并输出结构化问题列表”。
+
+### Follow-up
+
+* Why is this not just a RAG assistant?
+* Why is this not just OCR plus summarisation?
+* What makes model documentation review harder than normal enterprise document Q&A?
+
+---
+
+## Q2. User journeys
+
+**What are the main user journeys in this platform?**
+
+### 想听到的内容
+
+* submission / upload
+* parse and extract
+* review run
+* finding inspection
+* evidence drill-down
+* reviewer comment / override / assign follow-up
+* resubmission / rerun
+* compare versions
+* close review / archive history
+
+### Follow-up
+
+* Who are the users: validators, SMEs, admins, model owners?
+* What should a validator be able to do in the UI?
+* What should a model owner see versus not see?
+
+---
+
+## Q3. End-to-end architecture
+
+**How would you design the end-to-end architecture?**
+
+### 想听到的内容
+
+* document ingestion
+* parsing / extraction
+* content normalization
+* chunking / section mapping
+* review pack / rule engine
+* retrieval of standards/guidance if needed
+* semantic review with LLM
+* findings store
+* UI and API
+* persistence / audit / rerun engine
+
+### PDF reference inspiration
+
+PDF 展示了“输入 PDF → 解析 → 审核 → 输出”的标准链路，并把系统分成文档解析模块、AI Agent 模块、规则系统模块。
+
+### Follow-up
+
+* Where would you separate parsing, review orchestration, and persistence?
+* Would you use a state machine or graph workflow?
+* What are the core data objects in the system?
+
+---
+
+## Q4. Rules vs LLM vs retrieval vs human review
+
+**Where should deterministic rules, retrieval, LLM semantic reasoning, and human review each fit?**
+
+### 想听到的内容
+
+#### Rules
+
+* required section checks
+* metadata / template completeness
+* required evidence presence
+* field / date / identifier checks
+* structural consistency checks
+
+#### Retrieval
+
+* policy / validation standard lookup
+* review guidance lookup
+* requirement mapping
+* comparison against approved templates
+
+#### LLM semantic reasoning
+
+* assess whether methodology is clearly described
+* detect vague claims
+* assess whether evidence supports stated conclusions
+* identify likely gaps or inconsistencies
+* map narrative text to review expectations
+
+#### Human review
+
+* final materiality judgement
+* disputed findings
+* nuanced interpretation
+* sign-off / challenge
+* override decisions
+
+### PDF reference inspiration
+
+PDF 里把“规则系统模块”“AI Agent 模块”“外部知识检索”“规划/反思（Agentic模式）”分开描述，这一题正好对应。
+
+### Follow-up
+
+* What should never be left solely to the LLM?
+* If the rules engine and the LLM disagree, what happens?
+* Would you let the agent produce a final validation conclusion?
+
+---
+
+## Q5. Why agentic AI here?
+
+**Why is this an agentic AI use case rather than a simple pipeline or one-shot prompt?**
+
+### 想听到的内容
+
+* multiple steps
+* branching logic
+* selective tool use
+* requirement-based routing
+* retrieval only when needed
+* re-check after human input
+* cross-document reasoning
+* stateful rerun cycle
+
+### PDF reference inspiration
+
+PDF 明确说文档审核 Agent 的关键是“自主推理”和“工具调用”，并给出“先提取、再检索、再核对、再综合判断”的多步流程。
+
+### Follow-up
+
+* Where exactly would you use graph/state orchestration?
+* Which steps are deterministic, and which are adaptive?
+* What is the risk of over-engineering this with too much agent logic?
+
+---
+
+## Q6. Parsing, OCR, and evidence traceability
+
+**How would you design parsing and evidence traceability for long model documents?**
+
+### 想听到的内容
+
+* OCR / parser selection by document type
+* preserve layout and section hierarchy
+* preserve page and bbox or source anchors
+* handle tables, appendices, screenshots, diagrams
+* normalize OCR issues
+* section-aware chunking
+
+### PDF reference inspiration
+
+PDF 对长文档场景强调：
+
+* OCR+RAG 更适合长文档
+* 精确坐标定位与可追溯性非常关键
+* 要按标题层级、段落语义切分
+* 要保留 bbox_list 以便回到原 PDF 高亮问题。
+
+### Follow-up
+
+* When would you use OCR+text pipeline versus a VLM?
+* How would you handle tables or annexes with important evidence?
+* What should happen if extraction quality is poor?
+
+---
+
+## Q7. Chunking and review unit design
+
+**How would you split documents into review units without losing validation context?**
+
+### 想听到的内容
+
+* section-aware chunking
+* hierarchy-aware chunking
+* keep evidence linkage
+* retain section metadata
+* avoid splitting across important logical units
+* perhaps different review units for narrative sections vs evidence tables
+
+### PDF reference inspiration
+
+PDF 中的合同审核明确使用带坐标的 chunking，并且强调一个 chunk 会绑定多个 bbox，后续才能精确定位问题。
+
+### Follow-up
+
+* Would you chunk by heading, paragraph, token size, or document schema?
+* How do you avoid missing cross-section inconsistencies?
+* How would you debug poor chunking decisions?
+
+---
+
+## Q8. Review finding schema
+
+**What should a structured review finding look like?**
+
+### 想听到的内容
+
+至少包括：
+
+* finding_id
+* case_id / run_id
+* review_pack / rule_id
+* category
+* severity / priority
+* finding type
+* description
+* source evidence
+* page / location / anchor
+* rationale
+* suggested follow-up
+* status
+* reviewer override / comment
+* created_at / updated_at
+
+### PDF reference inspiration
+
+PDF 的审核输出不是单段文字，而是 `issues`、`modifications`、`corrected_text`、`summary`、`overall_risk_level` 这类结构化对象；票据场景里也有字段、期望、实际、建议、总体状态。
+
+### Follow-up
+
+* Which fields should be deterministic?
+* Which fields may be LLM-generated?
+* How would you distinguish evidence-backed findings from inferred concerns?
+
+---
+
+## Q9. Repeat review cycles and persistence
+
+**How would you support repeated review after the model owner updates documents?**
+
+### 想听到的内容
+
+* document versioning
+* review run lineage
+* delta comparison
+* resolved / reopened / unchanged findings
+* preserve reviewer comments
+* allow partial rerun or full rerun
+* persistent case history
+
+### PDF reference inspiration
+
+PDF 的产品雏形里已经出现“历史记录”，并且整个系统天然适合输出报告后整改再审。
+
+### Follow-up
+
+* What would be stored at case level vs run level?
+* How would you stop overrides from being lost in reruns?
+* Would you rerun all checks or only impacted checks?
+
+---
+
+## Q10. Controls and evaluation
+
+**What are the main risks in this platform, and how would you evaluate quality?**
+
+### 想听到的内容
+
+#### Risks
+
+* parser / OCR errors
+* wrong rule logic
+* hallucinated findings
+* weak evidence linkage
+* over-reliance by validators
+* stale standards or review packs
+* inconsistent output across reruns
+* false sense of completeness
+* poor access control
+
+#### Evaluation
+
+* benchmark document set
+* expected finding set
+* evidence correctness
+* completeness recall
+* precision of flagged issues
+* reviewer acceptance / override rates
+* rerun consistency
+* section-level coverage
+
+### PDF reference inspiration
+
+PDF 里已体现出强结构化校验思路：多 Agent 结果、总体状态、详细问题、建议、导出 JSON 报告。
+
+### Follow-up
+
+* How would you evaluate semantic checks?
+* What would a high override rate tell you?
+* How would you prove the system is helping rather than creating noise?
+
+---
+
+## Q11. Delivery leadership
+
+**If you were leading this workstream, what would you deliver in the first 8–12 weeks?**
+
+### 想听到的内容
+
+* one or two document types first
+* one review pack first
+* basic parsing + structured findings + evidence drill-down
+* validator comment + override
+* persistent review run history
+* exportable report
+* maybe no full automation of decisions in MVP
+
+### Follow-up
+
+* What would you deliberately leave out of MVP?
+* What roles do you need: engineer, validator SME, product lead, platform support?
+* What are the biggest delivery dependencies?
+* How would you sequence pilot → controlled rollout → broader adoption?
+
+---
+
+# 8. High-value practical challenge questions
+
+这些题最能识别候选人是否真的做过 agentic review system。
+
+---
+
+## Practical 1
+
+**Suppose a required section appears to be missing based on template rules, but the LLM believes the content exists in a differently named section. What should the system do?**
+
+### 强答案
+
+* keep both signals separate
+* classify as mapping ambiguity
+* present evidence to reviewer
+* do not silently let LLM override deterministic rule
+* maybe improve section mapping logic later
+
+这和 PDF 里“规则系统 + 语义理解”分层非常一致。
+
+---
+
+## Practical 2
+
+**Suppose the parser extracts text from a scanned appendix badly, and an important validation evidence table is partially corrupted. How should the platform behave?**
+
+### 强答案
+
+* extraction quality flag
+* dependent checks marked unreliable
+* ask for manual review / alternative upload
+* do not fabricate confident findings
+* log parser failure clearly
+
+PDF 里把文档解析质量视为落地关键，并展示了 OCR error cleaning、表格识别、阅读顺序修复等预处理思路。
+
+---
+
+## Practical 3
+
+**How would you bind a finding back to the original document location?**
+
+### 强答案
+
+* preserve page + bbox / text anchor / chunk id
+* match finding original text to bbox_list
+* support front-end highlighting
+* keep evidence references in finding schema
+
+这几乎就是 PDF 合同审核方案的核心亮点。
+
+---
+
+## Practical 4
+
+**If retrieval finds the relevant validation standard, but the final review comment is still weak or misleading, how would you debug it?**
+
+### 强答案
+
+* inspect retrieved sources
+* inspect prompt assembly
+* inspect chunk quality
+* inspect whether the right requirement was mapped
+* inspect evidence vs summary mismatch
+* inspect output schema validation
+* inspect traces by run id
+
+---
+
+## Practical 5
+
+**Why would long model documentation often favor OCR/text+retrieval over end-to-end VLM review?**
+
+### 强答案
+
+* token cost
+* long document handling
+* structured chunking
+* evidence traceability
+* better section control
+* better table handling in many workflows
+* location grounding
+
+PDF 对这点说得非常明确。
+
+---
+
+# 9. Scoring rubric
+
+每项 1–5 分。
+
+---
+
+## Dimension 1 — Understanding of validation review workflow
+
+**是否理解 model documentation review 的本质**
+
+### 5
+
+* clearly frames it as standards-driven validation review
+* discusses evidence gaps, follow-up, challenge, repeat review
+
+### 3
+
+* understands document review generally, but not deeply tied to validation workflow
+
+### 1
+
+* treats it as generic document Q&A
+
+---
+
+## Dimension 2 — Agentic system design
+
+**是否真正理解 agentic workflow**
+
+### 5
+
+* clear multi-step orchestration
+* conditional routing
+* rule + retrieval + semantic reasoning + HITL
+* stateful rerun logic
+
+### 3
+
+* some orchestration ideas, but shallow
+
+### 1
+
+* just says “use LLM and tools”
+
+---
+
+## Dimension 3 — Practical implementation depth
+
+**是否能落到实现细节**
+
+### 5
+
+* parsing strategy, chunking, evidence mapping, finding schema, persistence, debug path all concrete
+
+### 3
+
+* reasonable ideas but little implementation depth
+
+### 1
+
+* vague or hand-wavy
+
+---
+
+## Dimension 4 — Governance, controls, auditability
+
+**是否具备 enterprise control mindset**
+
+### 5
+
+* discusses evidence traceability, role separation, overrides, history, repeatability, audit trail
+
+### 3
+
+* mentions some controls but not integrated
+
+### 1
+
+* little to no control thinking
+
+---
+
+## Dimension 5 — Product / workstream leadership
+
+**是否具备 lead 视角**
+
+### 5
+
+* clear MVP, sequencing, stakeholder model, dependencies, rollout plan
+
+### 3
+
+* some roadmap sense, but weak prioritisation
+
+### 1
+
+* only technical brainstorming
+
+---
+
+# 10. Strong answer signals
+
+强候选人通常会：
+
+* 一开始就把产品定义成 **validation review platform**
+* 明确区分 **rule checks / semantic checks / retrieval / human review**
+* 会讲 **structured findings**
+* 会讲 **evidence traceability**
+* 会讲 **repeat review cycles**
+* 会讲 **review packs / expectations / standards mapping**
+* 会提到 **don’t let the LLM become the final validator**
+* 会设计 **persistent case and run history**
+* 会讲 **why OCR/text pipeline is often better for long evidence-heavy docs**
+* 会讲 **MVP and staged rollout**
+
+---
+
+# 11. Weak answer signals
+
+弱候选人通常会：
+
+* 把它说成“上传文档然后让 LLM 总结”
+* 不提 validation expectations / evidence completeness
+* 不提 human override
+* 不提 repeated review
+* 不提 evidence linkage
+* 不提 structure / schema / review object model
+* 只会说 RAG、vector DB、prompt
+* 无法解释为什么是 agentic use case
+* 没有 delivery plan
+
+---
+
+# 12. Suggested wrap-up question
+
+最后 3–5 分钟可以问：
+
+**What is the biggest mistake to avoid when building this platform for a model validation team?**
+
+强候选人常见回答会包括：
+
+* over-automating validator judgement
+* weak parsing foundation
+* poor evidence traceability
+* mixing deterministic and semantic findings
+* building a demo instead of a repeatable review platform
+* trying to cover too many document types in MVP
+
+---
+
+# 13. Short score sheet for interviewer
+
+**Candidate:**
+**Date:**
+
+| Dimension                       | Score 1–5 | Notes |
+| ------------------------------- | --------: | ----- |
+| Validation review understanding |           |       |
+| Agentic system design           |           |       |
+| Practical implementation depth  |           |       |
+| Governance / controls           |           |       |
+| Workstream leadership           |           |       |
+
+**Overall recommendation:**
+
+* Strong hire
+* Hire
+* Borderline
+* No hire
+
+**Key strengths:**
+**Key concerns:**
+**Evidence from answers:**
+
+---
+
+# 14. Why this pack is aligned with the PDF
+
+这套 pack 与 PDF 的对应关系很清楚：
+
+* **系统骨架**：PDF 用“输入→解析→审核→输出”的方式定义了文档审核系统。
+* **Agentic 本质**：PDF 强调自主推理、工具调用、外部知识检索、多步规划。
+* **模块拆分**：PDF 将方案拆成文档解析模块、AI Agent 模块、规则系统模块。
+* **多 Agent 与编排**：PDF 的票据场景展示了完整性、格式、计算、业务规则四类 Agent，加上 Orchestrator 汇总状态和生成报告。
+* **长文档策略**：PDF 明确说明长文档更适合 OCR+RAG 而不是端到端 VLM，原因包括 token 成本、坐标定位、智能切分、表格处理。
+* **坐标追溯**：PDF 把 bbox_list、page、original text 映射作为核心逻辑，用于精确高亮问题位置。
+* **结构化输出**：PDF 明确要求 issues、modifications、corrected_text、summary、overall_risk_level。
+* **规则与优先级**：PDF 用 P0/P1/P2 和多种专业规则类型展示了如何做有层次的审核规则体系。
+
+你现在做的，只是把这些技术点从“法务/票据审核 demo”提升成了“model validation team 的 model documentation review platform”。
+
+如果你愿意，我下一步可以继续把这套内容整理成两份可直接打印的版本：
+**Candidate handout（一页）** 和 **Interviewer guide（详细版）**。

@@ -1,0 +1,737 @@
+下面是一套适合 **50 分钟面试** 的正式 case study，主题是：
+
+# Case Study
+
+## Design a Policy & Guidance RAG Application for Internal Risk and Review Teams
+
+这版是按你前面希望的风格来设计的：
+不是普通 chatbot，不是纯知识库搜索，而是更贴近 **internal risk / review teams** 的实际工作方式，重点考察候选人是否真正理解：
+
+* enterprise RAG
+* complex question answering
+* evidence traceability
+* policy/guidance interpretation boundaries
+* review workflow support
+* product / workstream leadership
+* 何时需要从 standard RAG 走向 agentic / graph-based orchestration
+
+---
+
+# 1. Interview objective
+
+这套 case study 主要考察 5 个方面：
+
+## A. Product understanding
+
+候选人是否理解这不是一个“万能问答助手”，而是给 internal risk / review teams 用的 **policy and guidance decision-support application**。
+
+## B. Practical RAG design
+
+候选人是否真的懂：
+
+* document ingestion
+* parsing
+* chunking
+* metadata
+* retrieval
+* reranking
+* citations
+* evaluation
+* ambiguity handling
+
+## C. Complex enterprise query handling
+
+候选人是否能处理：
+
+* multi-document questions
+* conflicting guidance
+* versioned guidance
+* scope/applicability questions
+* evidence-backed responses
+
+## D. Judgement on architecture
+
+候选人是否知道：
+
+* 什么时候 standard RAG 足够
+* 什么时候需要 query decomposition
+* 什么时候适合 agentic / graph RAG
+* 什么时候不应过度设计
+
+## E. Workstream lead capability
+
+候选人是否能把这个产品作为一个实际 workstream 来推进，而不是只会讲技术组件。
+
+---
+
+# 2. Suggested 50-minute interview format
+
+## 0–5 minutes
+
+Candidate reads the case brief
+
+## 5–10 minutes
+
+Candidate thinking time
+
+## 10–25 minutes
+
+Candidate walkthrough of solution
+
+## 25–44 minutes
+
+Deep-dive questions
+
+## 44–50 minutes
+
+Leadership / delivery / wrap-up
+
+---
+
+# 3. Candidate Case Brief
+
+下面这部分可以直接给候选人。
+
+---
+
+## Case Study: Design a Policy & Guidance RAG Application
+
+You are asked to design an internal **Policy & Guidance RAG application** for internal risk and review teams.
+
+The application is intended to help users navigate and apply internal policy and guidance documents across review and challenge workflows. Example document types may include:
+
+* policy standards
+* procedural guidance
+* review checklists
+* control requirements
+* governance notes
+* FAQs
+* implementation guidance
+* prior review guidance or interpretation notes
+
+The users of the system may include:
+
+* independent review teams
+* risk oversight teams
+* validators / reviewers
+* SMEs involved in review and challenge
+* business users preparing submissions who need to understand applicable guidance
+
+This is **not** a simple chatbot and **not** a generic enterprise search tool.
+
+The application should support an end-to-end workflow where users can:
+
+* ask simple factual questions about policy and guidance
+* ask more complex questions requiring multiple documents
+* identify what guidance is relevant to a specific scenario
+* understand where different guidance documents align or differ
+* inspect source evidence and citations behind answers
+* distinguish between direct policy statements and model-generated synthesis
+* handle ambiguity or insufficient evidence safely
+
+Assume:
+
+* documents exist in PDF, Word, HTML, and wiki-like formats
+* documents may have different versions, owners, and effective dates
+* some user questions are straightforward lookups, while others are complex and require decomposition
+* some future use cases may require combining policy/guidance with a second knowledge base containing case-specific evidence or submissions
+* outputs must be explainable, auditable, and trustworthy
+* the product should evolve from MVP into a broader internal review support platform over time
+
+Please explain:
+
+1. how you would define the product and key user journeys
+2. what the MVP should include
+3. how you would design the architecture and RAG workflow
+4. how you would handle retrieval, citations, and complex multi-document questions
+5. when standard RAG is sufficient and when agentic / graph-based orchestration may be needed
+6. what controls, risks, and evaluation approach you would use
+7. how you would lead delivery of this workstream
+
+---
+
+# 4. Interviewer opening script
+
+你可以直接这样说：
+
+> We’d like you to think through the design of a Policy & Guidance RAG application for internal risk and review teams.
+> This is not intended to be a generic chatbot. It should help users navigate policy and guidance documents, answer complex questions with traceable evidence, and support review and challenge workflows in a controlled and auditable way.
+>
+> Please take a few minutes to think, then walk us through:
+>
+> * the product you would build
+> * the user workflow
+> * the architecture and RAG design
+> * how you would handle simple versus complex questions
+> * what should be automated versus left to human judgement
+> * and how you would deliver this as a practical workstream
+
+---
+
+# 5. What good candidate coverage should include
+
+理想情况下，候选人应覆盖这些方面：
+
+* 这是一个 **policy/guidance decision-support system**
+* 不是 general chat assistant
+* 用户问题类型需要分层：lookup、summary、scope guidance、triage guidance、comparison、multi-doc synthesis
+* retrieval 要考虑 metadata、versions、effective dates、document type
+* 输出要有 citations 和 evidence traceability
+* 要区分 direct source statements 与 inferred synthesis
+* 要有 ambiguity / insufficient evidence handling
+* 复杂问题可能需要 decomposition 或 graph / agentic orchestration
+* MVP 要聚焦，不要一上来全做
+* 要有 evaluation 和 governance thinking
+
+---
+
+# 6. Core interview questions
+
+下面这套问题适合 50 分钟。
+
+---
+
+## Q1. Product framing
+
+**How would you define this product, and what problem is it solving for internal risk and review teams?**
+
+### 想听到的点
+
+* 这是 policy/guidance review support product
+* 不是 generic chatbot
+* 目标是提升 consistency, speed, traceability, coverage
+* 不是替代 final human judgement
+* 帮助 users find relevant guidance, interpret applicability, compare sources, and identify evidence-backed answers
+
+### Follow-up
+
+* Why is this not just an enterprise search tool?
+* Why is this not simply a chatbot over documents?
+* What makes this use case different from a normal FAQ assistant?
+
+---
+
+## Q2. User journeys
+
+**What are the main user journeys in this product?**
+
+### 想听到的点
+
+候选人最好能说出不同类型任务，例如：
+
+* factual policy lookup
+* relevant guidance discovery
+* scope/applicability guidance
+* comparison across documents
+* validation or review support
+* follow-up / missing information identification
+* escalation / uncertainty handling
+
+### Follow-up
+
+* Who are the main users?
+* What is different between a validator/reviewer and a business user preparing a submission?
+* What outputs would users actually want to see in the UI?
+
+---
+
+## Q3. MVP definition
+
+**What would your MVP include, and what would you deliberately leave out?**
+
+### 想听到的点
+
+* MVP focused on one or two core workflows
+* strong citation and retrieval quality
+* controlled question types
+* limited document scope or curated KB
+* clear UI for evidence-backed answers
+* probably avoid over-complex agentic orchestration in phase 1
+
+### Follow-up
+
+* What would you exclude from phase 1?
+* What would be risky to include too early?
+* How would you explain MVP boundaries to stakeholders?
+
+---
+
+## Q4. End-to-end architecture
+
+**How would you design the end-to-end architecture and RAG workflow?**
+
+### 想听到的点
+
+* ingestion
+* parsing
+* normalization
+* chunking
+* metadata model
+* indexing
+* retrieval
+* reranking
+* answer generation
+* citations
+* logging / feedback / evaluation
+
+### Follow-up
+
+* What are the core data objects?
+* How would you handle effective dates and document versions?
+* Would you use one index or multiple indexes?
+* How would you separate knowledge ingestion from online answering?
+
+---
+
+## Q5. Parsing and chunking
+
+**How would you parse and chunk policy and guidance documents for this use case?**
+
+### 想听到的点
+
+* heading-aware chunking
+* preserve section hierarchy
+* keep metadata such as doc type, owner, version, effective date
+* different strategies for standards, checklists, and FAQs
+* avoid losing logical structure
+
+### Follow-up
+
+* Would you use the same chunking strategy for all document types?
+* What chunking mistakes would hurt citation quality?
+* How would you handle tables, annexes, appendices, or embedded lists?
+
+---
+
+## Q6. Retrieval and citations
+
+**How would you design retrieval and evidence traceability?**
+
+### 想听到的点
+
+* dense or hybrid retrieval
+* metadata filtering
+* reranking
+* top-k strategy
+* citation mapping to title/section/page/anchor
+* distinguish source-backed content from synthesis
+* don’t allow unsupported citations
+
+### Follow-up
+
+* How would you stop the model from citing irrelevant retrieved chunks?
+* How would you present citations in the UI?
+* What should happen if evidence is weak or incomplete?
+* How would you support auditability?
+
+---
+
+## Q7. Complex questions
+
+**How would you handle complex questions that require combining multiple guidance documents?**
+
+### 想听到的点
+
+* classify question type
+* possible decomposition into sub-questions
+* retrieve by subtask
+* merge and deduplicate evidence
+* structured answer generation
+* uncertainty handling
+* separate direct sources from inferred conclusions
+
+### Follow-up
+
+* Would you solve this in one prompt or multiple steps?
+* What would the output structure look like?
+* How would you handle conflicting guidance across documents?
+* How would you respond if the answer depends on missing context?
+
+---
+
+## Q8. Standard RAG vs agentic / graph RAG
+
+**When would standard RAG be sufficient, and when would you introduce agentic or graph-based orchestration?**
+
+### 想听到的点
+
+#### Standard RAG is enough for:
+
+* direct factual lookup
+* section-specific answers
+* simple summaries
+* straightforward guidance retrieval
+
+#### More advanced orchestration may be needed for:
+
+* multi-hop questions
+* cross-document comparison
+* policy hierarchy / document dependency
+* scenario-based applicability questions
+* combining policy/guidance with a second KB
+* iterative clarification or decomposition
+
+### Follow-up
+
+* What is the risk of over-engineering with agents too early?
+* What would you model as a graph?
+* If graph extraction quality is weak, what would you do?
+* Would you use a state machine or explicit workflow for certain task types?
+
+---
+
+## Q9. Dual knowledge base extension
+
+**If later we add a second knowledge base containing case-specific evidence or submissions, how would you extend the design?**
+
+### 想听到的点
+
+* separate policy/guidance KB from evidence/submission KB
+* query router or task classifier
+* avoid blending normative guidance with case-specific facts
+* structured answer that clearly distinguishes:
+
+  * what the policy says
+  * what the case evidence says
+  * what gaps remain
+
+### Follow-up
+
+* How would you decide whether to query one KB or both?
+* How would you prevent the model from incorrectly treating evidence as policy?
+* How would you present the final answer clearly?
+
+---
+
+## Q10. Controls and risk
+
+**What are the main risks in this product, and how would you control them?**
+
+### 想听到的点
+
+* hallucination
+* weak retrieval
+* outdated or superseded guidance
+* wrong document precedence
+* over-reliance by users
+* poor ambiguity handling
+* unsupported synthesis
+* access control / sensitive content
+* hidden prompt or orchestration failures
+
+### Follow-up
+
+* What should be logged?
+* What should trigger “insufficient evidence” instead of an answer?
+* How would you handle conflicting or overlapping guidance?
+* What should remain a human judgement call?
+
+---
+
+## Q11. Evaluation
+
+**How would you evaluate whether the product is working well?**
+
+### 想听到的点
+
+* benchmark question set
+* retrieval quality
+* citation correctness
+* groundedness
+* answer usefulness
+* task-based evaluation
+* ambiguity handling
+* reviewer/SME acceptance
+* regression testing
+
+### Follow-up
+
+* What would your offline evaluation set look like?
+* How would you evaluate complex multi-document questions?
+* What would a high “user correction” rate suggest?
+* What metrics matter most in MVP versus later stages?
+
+---
+
+## Q12. Workstream leadership
+
+**If you were leading this workstream, what would you aim to deliver in the first 8–12 weeks?**
+
+### 想听到的点
+
+* curated KB and ingestion pipeline
+* one or two core workflows
+* reliable citations
+* answer schema
+* simple UI
+* evaluation dataset
+* pilot group with reviewers / risk team
+* phased roadmap rather than big-bang delivery
+
+### Follow-up
+
+* What team roles do you need?
+* What are the biggest dependencies?
+* How would you involve SMEs?
+* What would you deliberately leave for phase 2?
+
+---
+
+# 7. High-value practical challenge questions
+
+这些问题非常适合区分“会讲概念”和“真的做过”。
+
+---
+
+## Practical 1
+
+**Suppose retrieval returns the relevant documents, but the final answer is still weak or misleading. How would you debug it?**
+
+### 强答案通常会提到
+
+* inspect chunking
+* inspect reranking
+* inspect prompt construction
+* inspect context truncation
+* inspect task classification
+* inspect citation mapping
+* inspect whether the wrong passages were emphasized
+
+---
+
+## Practical 2
+
+**Suppose two guidance documents appear to conflict. How should the system behave?**
+
+### 强答案
+
+* do not force a false single answer
+* surface both sources
+* consider document precedence / version / effective date
+* explain ambiguity
+* possibly recommend escalation or human review
+
+---
+
+## Practical 3
+
+**Suppose the user asks: “What guidance applies here, what are the likely risk flags, and what evidence should be requested first?” How would you process that?**
+
+### 强答案
+
+* treat as multi-part task
+* decompose into:
+
+  * applicable guidance
+  * risk flags
+  * missing evidence
+* retrieve separately
+* structure answer into sections
+* label direct evidence versus inferred output
+
+---
+
+## Practical 4
+
+**What would your response schema look like for a complex answer?**
+
+### 理想字段示例
+
+* direct_answer
+* relevant_guidance
+* cited_sources
+* caveats
+* missing_information
+* escalation_recommendation
+* evidence_strength / confidence
+* trace_id
+
+---
+
+## Practical 5
+
+**If stakeholders say they want “a ChatGPT for policy that answers anything,” how would you respond?**
+
+### 强答案
+
+* reset expectations
+* define scope
+* prioritize trust and traceability
+* emphasize controlled use cases first
+* explain risk of over-generalization
+
+---
+
+# 8. Scoring rubric
+
+每项 1–5 分。
+
+---
+
+## Dimension 1 — Product understanding
+
+**是否理解这是 internal risk/review teams 的 policy & guidance support tool，而不是普通 chat assistant**
+
+### 5
+
+Clearly frames it as a controlled, evidence-backed guidance support product for review workflows.
+
+### 3
+
+Understands document Q&A, but with limited workflow or governance depth.
+
+### 1
+
+Treats it as a generic chatbot over documents.
+
+---
+
+## Dimension 2 — Practical RAG design
+
+**是否具备真正的 RAG implementation understanding**
+
+### 5
+
+Explains parsing, chunking, metadata, retrieval, reranking, citations, and failure modes concretely.
+
+### 3
+
+Reasonable conceptual understanding, but light on implementation detail.
+
+### 1
+
+High-level buzzwords only.
+
+---
+
+## Dimension 3 — Handling complex enterprise questions
+
+**是否能处理复杂 multi-document / ambiguity / applicability 场景**
+
+### 5
+
+Can explain decomposition, evidence merging, ambiguity handling, and structured outputs clearly.
+
+### 3
+
+Some awareness, but limited depth.
+
+### 1
+
+Only handles simple lookup cases.
+
+---
+
+## Dimension 4 — Governance and controls
+
+**是否具备 enterprise trust / audit / control mindset**
+
+### 5
+
+Covers citations, auditability, outdated guidance risk, ambiguity handling, and human judgement boundaries.
+
+### 3
+
+Mentions some controls but not systematically.
+
+### 1
+
+Minimal governance thinking.
+
+---
+
+## Dimension 5 — Workstream leadership
+
+**是否具备 product/workstream lead 能力**
+
+### 5
+
+Clear MVP, prioritisation, team/dependency model, rollout, and stakeholder management.
+
+### 3
+
+Some roadmap thinking, but weak prioritisation.
+
+### 1
+
+Purely technical brainstorming without delivery shape.
+
+---
+
+# 9. Strong answer signals
+
+强候选人通常会：
+
+* 一开始就把它定义成 **controlled policy/guidance support product**
+* 明确说这不是 generic chatbot
+* 能区分 direct lookup、complex synthesis、applicability guidance 等任务类型
+* 会讲 metadata、versioning、effective dates、document precedence
+* 会强调 citation quality 和 evidence traceability
+* 会提 insufficient evidence / ambiguity-safe behavior
+* 会说 standard RAG 不必过度升级为 agent system
+* 但也知道哪些 complex cases 需要 decomposition / graph / orchestration
+* 会给出靠谱的 MVP 范围
+* 会讲 evaluation dataset 和 pilot rollout
+
+---
+
+# 10. Weak answer signals
+
+弱候选人通常会：
+
+* 把它直接说成“向量数据库 + LLM”
+* 不提 citations / traceability
+* 不提 versions / effective dates
+* 不提 conflicting guidance
+* 不提 ambiguity-safe handling
+* 复杂问题只会说“把多个 chunk 给模型总结”
+* 想一开始就上 full agentic graph system，没有 MVP judgement
+* 没有 delivery plan
+
+---
+
+# 11. Suggested wrap-up question
+
+最后 3–5 分钟可以问：
+
+**What is the biggest mistake to avoid when building this product for internal risk and review teams?**
+
+强候选人常见回答会包括：
+
+* treating it as a generic chatbot
+* weak citation quality
+* failing to manage outdated/superseded guidance
+* over-automating interpretation
+* no ambiguity-safe behavior
+* trying to do too much in phase 1
+
+---
+
+# 12. Short interviewer score sheet
+
+**Candidate:**
+**Date:**
+
+| Dimension                 | Score 1–5 | Notes |
+| ------------------------- | --------: | ----- |
+| Product understanding     |           |       |
+| Practical RAG design      |           |       |
+| Complex question handling |           |       |
+| Governance / controls     |           |       |
+| Workstream leadership     |           |       |
+
+**Overall recommendation:**
+
+* Strong hire
+* Hire
+* Borderline
+* No hire
+
+**Key strengths:**
+**Key concerns:**
+**Evidence from answers:**
+
+---
+
+如果你要，我下一步可以继续把这套内容整理成两份 **可直接打印的英文版本**：
+**Candidate handout（一页）** 和 **Interviewer guide（详细版）**。

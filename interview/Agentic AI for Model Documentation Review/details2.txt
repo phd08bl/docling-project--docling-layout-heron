@@ -1,0 +1,1435 @@
+Below is a practical **interviewer answer guide** for the **AI-assisted model documentation review platform** case study. For each main question, I’ve included:
+
+* **What a strong answer sounds like**
+* **What to look for**
+* **How good candidates may answer the follow-up questions**
+
+This is not a script candidates must match word-for-word. It is a guide to help you distinguish between:
+
+* someone who really understands how to build and lead this kind of platform, and
+* someone who only knows high-level AI terms.
+
+---
+
+# 1. Product framing
+
+## Main question
+
+**How would you define this product, and what problem is it solving for a model validation team?**
+
+## Good answer
+
+A strong candidate should say this is **not a general chatbot** and **not just a document summariser**. It is a **review support platform** for model validation teams that helps them assess whether model documentation is complete, clear, consistent, supported by evidence, and aligned with required standards or review expectations.
+
+They should explain that the product solves problems such as:
+
+* inconsistent review quality across validators
+* time spent manually locating relevant sections and evidence
+* difficulty tracking documentation gaps and follow-up questions
+* repeated review effort across resubmissions
+* weak traceability from findings back to source evidence
+
+They should also say the platform should **improve efficiency and consistency**, but **not replace validator judgement**. Final conclusions, materiality decisions, and interpretation of complex or borderline issues should remain with humans.
+
+## What to look for
+
+* Defines it as a **standards-driven review workflow**
+* Talks about **evidence gaps**, not just answering questions
+* Recognises **repeat review / resubmission cycle**
+* Understands that the goal is **support**, not automated validation sign-off
+* Sees this as a **platform** rather than a one-off tool
+
+## Good follow-up answer
+
+### What makes model documentation review harder than normal document Q&A?
+
+A strong candidate may say:
+
+* the task is not just finding information, but judging **whether expected evidence is present and sufficient**
+* information may be spread across multiple documents and annexes
+* the reviewer needs to assess **clarity, consistency, completeness, and support**
+* there may be templates, review packs, policy expectations, and internal standards to compare against
+* documents are versioned and updated over time
+* the output is not just an answer, but structured findings, comments, follow-up items, and review history
+
+---
+
+# 2. User journeys
+
+## Main question
+
+**What are the main user journeys in this platform?**
+
+## Good answer
+
+A strong candidate should describe an end-to-end lifecycle, for example:
+
+1. **Case intake / upload**
+
+   * validator or case owner uploads model documents and supporting files
+
+2. **Review setup**
+
+   * choose review pack, model type, document type, or review scope
+
+3. **Automated review run**
+
+   * parsing, rule checks, semantic review, evidence linkage
+
+4. **Findings review**
+
+   * validator inspects findings, opens source sections, checks rationale
+
+5. **Comment / override / disposition**
+
+   * validator accepts, edits, dismisses, or escalates findings
+
+6. **Follow-up / resubmission**
+
+   * model owner updates documents and resubmits
+
+7. **Rerun / delta review**
+
+   * compare changes, reopen or resolve prior findings
+
+8. **Close / archive**
+
+   * maintain audit trail and exportable report
+
+## What to look for
+
+* Upload and intake
+* Review run
+* Evidence drill-down
+* Comment / override
+* Resubmission and rerun
+* Compare versions
+* Close and archive
+
+## Good follow-up answer
+
+### What should a validator be able to do?
+
+A strong answer should include:
+
+* upload or select documents
+* choose review scope / pack
+* see structured findings
+* click into source evidence
+* add comments and override system outputs
+* mark findings as accepted, dismissed, resolved, or pending
+* compare reruns and document versions
+* export results / reports
+* see prior review history
+
+---
+
+# 3. End-to-end architecture
+
+## Main question
+
+**How would you design the end-to-end architecture?**
+
+## Good answer
+
+A strong candidate should break the solution into clear layers:
+
+### Ingestion layer
+
+* upload interface or document intake API
+* file storage
+* metadata capture
+
+### Parsing and normalisation layer
+
+* parse PDF, Word, PowerPoint, templates
+* OCR if needed
+* clean and normalise content
+* preserve headings, tables, sections, page references
+
+### Document structuring layer
+
+* chunking or section mapping
+* identify review units
+* link to anchors, pages, tables, appendices
+
+### Review orchestration layer
+
+* load review pack / rules
+* run deterministic checks
+* optional retrieval of standards/guidance
+* LLM semantic checks
+* combine outputs into structured findings
+
+### Findings and persistence layer
+
+* store runs, findings, evidence references, comments, overrides, statuses
+* support rerun lineage and delta comparisons
+
+### UI/API layer
+
+* findings dashboard
+* evidence drill-down
+* review actions
+* export / reporting
+
+### Audit / monitoring layer
+
+* logs, run traces, metrics, evaluation results
+
+## What to look for
+
+* Ingestion
+* Parsing and normalisation
+* Chunking / section mapping
+* Review packs and rules
+* Optional retrieval
+* Semantic review
+* Findings store
+* UI/API
+* Persistence and audit trail
+
+## Good follow-up answer
+
+### Where would you separate parsing, orchestration, and persistence?
+
+A strong answer:
+
+* parsing should be a distinct service/component because it is reusable and failure-prone
+* orchestration should manage workflow, state, rule selection, and review execution
+* persistence should store documents, extracted artifacts, runs, findings, and history separately from transient orchestration logic
+
+### Would you use a state machine or graph workflow?
+
+Good answer:
+
+* yes, likely for the review lifecycle: uploaded → parsed → validated extraction → reviewed → human review → rerun → closed
+* especially useful if there are branching steps, retries, or partial reruns
+
+### What are the core data objects?
+
+Good answer:
+
+* case
+* submission
+* document
+* document version
+* review run
+* review pack / rule set
+* finding
+* evidence reference
+* reviewer comment
+* override decision
+* audit event
+
+---
+
+# 4. Rules, retrieval, LLMs, and human review
+
+## Main question
+
+**Where should deterministic rules, retrieval, LLM semantic reasoning, and human review each fit?**
+
+## Good answer
+
+A strong candidate should clearly separate roles:
+
+### Deterministic rules
+
+Used for:
+
+* required section presence
+* metadata checks
+* template completeness
+* structural validation
+* required appendices / attachments
+* certain threshold or formatting checks
+
+### Retrieval
+
+Used for:
+
+* policy or standards lookup
+* validation guidance lookup
+* required expectations for a model type or use case
+* supporting comparisons against reference material
+
+### LLM semantic reasoning
+
+Used for:
+
+* whether the methodology is clearly explained
+* whether evidence appears to support a claim
+* whether the narrative is internally consistent
+* identifying vague, unsupported, or ambiguous statements
+* mapping sections to expectations when naming is inconsistent
+
+### Human review
+
+Used for:
+
+* final judgement
+* materiality or risk significance
+* borderline or disputed cases
+* deciding whether evidence is acceptable
+* approving or overriding findings
+
+## What to look for
+
+* Rules for completeness and structure
+* Retrieval for standards/guidance
+* LLM reasoning for clarity, consistency, sufficiency
+* Human final judgement and overrides
+
+## Good follow-up answers
+
+### What should never be left solely to the LLM?
+
+* final validation conclusion
+* sign-off decisions
+* materiality assessments
+* any high-impact control decision without human review
+
+### If rules and the LLM disagree, what happens?
+
+* do not silently merge them
+* surface the discrepancy
+* keep deterministic finding and semantic observation separate
+* let human reviewer decide, while capturing rationale
+* possibly improve mapping or rules later
+
+### Would you let the agent produce a final validation conclusion?
+
+* generally no, not autonomously
+* it may support drafting or summarising, but final conclusion should remain with validators
+
+---
+
+# 5. Why agentic AI here?
+
+## Main question
+
+**Why is this an agentic AI use case rather than a simple pipeline or one-shot prompt?**
+
+## Good answer
+
+A strong candidate should explain that the task is multi-step and stateful. It may involve:
+
+* parsing different files
+* choosing the right review pack
+* running different checks depending on document type
+* retrieving standards only when needed
+* routing different findings types differently
+* allowing human override and rerun
+* supporting delta review after resubmission
+
+They should also show judgement: not everything needs to be “agentic.” Some components can be deterministic. The agentic part is useful where the system needs **adaptive tool use, branching logic, decomposition, or iterative review cycles**.
+
+## What to look for
+
+* Multiple steps
+* Adaptive tool use
+* Branching logic
+* Requirement-based routing
+* Re-check after human input
+* Stateful rerun cycles
+
+## Good follow-up answers
+
+### Where would you use graph/state orchestration?
+
+* case lifecycle
+* parse quality checks
+* selective routing to rules / retrieval / semantic review
+* rerun logic after document changes
+* human review loop
+
+### Which steps are deterministic and which are adaptive?
+
+Deterministic:
+
+* parsing initiation
+* basic completeness checks
+* metadata validation
+* status transitions
+  Adaptive:
+* mapping content to expectations
+* semantic sufficiency checks
+* retrieval when uncertainty exists
+* deciding what parts to rerun after changes
+
+### What is the risk of over-engineering this with too much agent logic?
+
+* unnecessary complexity
+* harder debugging
+* unstable behavior
+* weaker auditability
+* slower performance
+* more difficult governance and testing
+
+---
+
+# 6. Parsing and evidence traceability
+
+## Main question
+
+**How would you design parsing and evidence traceability for long model documents?**
+
+## Good answer
+
+A strong candidate should say parsing depends on document type and quality:
+
+* native parsing for digital Word/PDF/PowerPoint where possible
+* OCR for scanned content
+* preserve structure: headings, tables, sections, appendices, page references
+* preserve source anchors for traceability
+* perform extraction quality checks before trusting outputs
+
+Evidence traceability should allow each finding to link back to:
+
+* document name
+* version
+* section or heading
+* page number
+* anchor or snippet
+* possibly table/appendix reference
+
+## What to look for
+
+* Parser / OCR choice by document type
+* Preservation of structure
+* Page references and anchors
+* Handling of tables and appendices
+* Extraction quality checks
+
+## Good follow-up answers
+
+### When would you use OCR plus text pipeline versus a multimodal model?
+
+* OCR/text pipeline is better when you need structured, traceable, low-cost extraction at scale
+* multimodal models may help with messy layouts, screenshots, or diagrams
+* but multimodal-only approaches can be weaker for precise traceability and control
+
+### How would you handle important tables or annexes?
+
+* use parser capable of table extraction
+* preserve row/column context
+* treat key tables as structured artifacts, not plain text only
+* link findings directly to table references where possible
+
+### What should happen if extraction quality is poor?
+
+* flag low-confidence extraction
+* block or downgrade dependent checks
+* request manual review or better source file
+* do not allow confident findings from corrupted input
+
+---
+
+# 7. Chunking and review unit design
+
+## Main question
+
+**How would you split documents into review units without losing validation context?**
+
+## Good answer
+
+A strong candidate should avoid generic “split every 500 tokens” answers. They should talk about:
+
+* section-aware chunking
+* hierarchy-aware chunking
+* preserving section titles and document structure
+* different chunking for narrative sections vs evidence tables
+* keeping links to source anchors
+* avoiding splitting across logically related content
+* possibly using document-schema-aware units if templates exist
+
+They should also mention cross-section inconsistency risk and the need for some checks to work across multiple chunks or sections.
+
+## What to look for
+
+* Section-aware chunking
+* Hierarchy-aware chunking
+* Evidence linkage
+* Section metadata retained
+* Avoid splitting important logical units
+* Different handling for tables vs narrative text
+
+## Good follow-up answers
+
+### Would you chunk by heading, paragraph, token size, or document schema?
+
+Best answer:
+
+* primarily by heading / section / schema where possible
+* use token size as a secondary constraint, not the main logic
+* paragraphs alone may miss higher-level structure
+
+### How do you avoid missing cross-section inconsistencies?
+
+* add cross-section comparison checks
+* include section metadata in reasoning
+* run document-level or multi-section consistency prompts
+* allow retrieval across related sections, not isolated chunks only
+
+### How would you debug poor chunking decisions?
+
+* inspect retrieval misses
+* inspect finding-source mismatch
+* inspect whether key content is split or duplicated badly
+* compare outputs across chunking strategies
+* review trace logs and retrieval hits
+
+---
+
+# 8. Structured findings
+
+## Main question
+
+**What should a structured review finding look like?**
+
+## Good answer
+
+A strong candidate should describe a structured schema, for example:
+
+* finding_id
+* case_id
+* run_id
+* document_id / version
+* category
+* severity
+* review_pack_reference / rule_id
+* description
+* evidence_reference(s)
+* rationale
+* recommendation / next action
+* status
+* reviewer decision
+* reviewer comments
+* created_at / updated_at
+
+They should distinguish between:
+
+* system-generated fields
+* human-updated fields
+* evidence-backed statements
+* inferred concerns
+
+## What to look for
+
+* Finding ID
+* Run ID
+* Category
+* Severity
+* Rule/review-pack reference
+* Description
+* Evidence references
+* Rationale
+* Recommended follow-up
+* Status
+* Reviewer comments / decision
+* Timestamps
+
+## Good follow-up answers
+
+### Which fields should be deterministic?
+
+* IDs
+* timestamps
+* rule references
+* statuses
+* document metadata
+* explicit structural check results
+
+### Which may be LLM-generated?
+
+* natural language description
+* rationale
+* suggested follow-up wording
+* categorisation in some cases
+* semantic concern summary
+
+### How would you distinguish evidence-backed findings from inferred concerns?
+
+* explicit flag or field type
+* mark finding basis as deterministic / source-backed / inferred
+* show evidence strength and source links clearly
+
+---
+
+# 9. Repeat review cycles and persistence
+
+## Main question
+
+**How would you support repeated review after the model owner updates documents?**
+
+## Good answer
+
+A strong candidate should explain:
+
+* every submission and document version should be stored
+* each review run should have its own ID and lineage
+* compare old and new documents
+* support resolved, reopened, unchanged, and new findings
+* preserve reviewer comments and overrides
+* allow full rerun or targeted rerun where appropriate
+
+They should recognise that this is critical because validation review is iterative, not one-shot.
+
+## What to look for
+
+* Document versioning
+* Review-run lineage
+* Delta comparison
+* Resolved / reopened findings
+* Preservation of comments and overrides
+* Partial rerun where appropriate
+
+## Good follow-up answers
+
+### What is stored at case level versus run level?
+
+Case level:
+
+* overall review case
+* model / submission identifiers
+* cumulative history
+* latest status
+  Run level:
+* specific documents reviewed
+* parser outputs
+* rules used
+* findings at that point in time
+* trace logs
+* review decisions for that run
+
+### How do you stop overrides from being lost?
+
+* store overrides as explicit reviewer actions, not transient UI state
+* carry forward unresolved human decisions into reruns
+* require explicit reconciliation if new run conflicts with prior override
+
+### Would you rerun all checks or only impacted checks?
+
+* depends on design and confidence in change detection
+* targeted rerun is efficient if you can map changes safely
+* but full rerun may still be needed for cross-document consistency or global logic
+
+---
+
+# 10. Controls and evaluation
+
+## Main question
+
+**What are the main risks in this platform, and how would you evaluate quality?**
+
+## Good answer
+
+A strong candidate should identify risks such as:
+
+* parser / OCR errors
+* incorrect rules
+* hallucinated findings
+* weak evidence linkage
+* false sense of completeness
+* stale standards or review packs
+* access control issues
+* inconsistent behavior across reruns
+* weak human oversight
+* overly noisy system reducing trust
+
+For evaluation, they should propose:
+
+* benchmark cases
+* expected findings / gold sets
+* evidence correctness
+* precision / recall of findings where feasible
+* acceptance / override rates
+* rerun consistency
+* SME review of semantic findings
+* measurement of noise vs useful signal
+
+## What to look for
+
+* Parser errors
+* Wrong rules
+* Hallucinated findings
+* Weak evidence linkage
+* False sense of completeness
+* Stale standards
+* Access control
+* Inconsistent reruns
+* Evaluation with benchmark cases, evidence correctness, acceptance/override rates, rerun consistency
+
+## Good follow-up answers
+
+### How would you evaluate semantic checks?
+
+* human-labelled benchmark set
+* compare against SME or validator judgement
+* score consistency, usefulness, correctness, evidence support
+* evaluate per finding type, not just aggregate
+
+### What would a high override rate tell you?
+
+* could indicate poor rules
+* poor semantic prompting
+* excessive noise
+* mismatch with validator expectations
+* weak parsing / retrieval
+  It is a signal for diagnosis, not automatically success or failure.
+
+### How would you prove the system is helping rather than creating noise?
+
+* measure time saved
+* measure reviewer acceptance
+* measure useful finding rate
+* compare baseline manual review outcomes
+* gather qualitative feedback
+* assess whether important gaps are found earlier or more consistently
+
+---
+
+# 11. Delivery leadership
+
+## Main question
+
+**If you were leading this workstream, what would you deliver in the first 8–12 weeks?**
+
+## Good answer
+
+A strong answer should show prioritisation. For example:
+
+### First 8–12 weeks MVP
+
+* support one or two document types
+* support one review pack first
+* basic ingestion and parsing
+* section mapping / evidence traceability
+* deterministic rules plus a limited number of semantic checks
+* structured findings UI
+* comments and override capability
+* persistent review history
+* exportable report
+
+They should avoid promising too much too early.
+
+## What to look for
+
+* One or two document types first
+* One review pack first
+* Basic parsing
+* Structured findings
+* Evidence drill-down
+* Comments and override
+* Persistent history
+* Exportable report
+
+## Good follow-up answers
+
+### What would you deliberately leave out of MVP?
+
+* full multi-document orchestration across every use case
+* automated final conclusions
+* too many model types or review packs
+* advanced agentic branching unless clearly needed
+* broad admin tooling unless essential
+
+### What team roles do you need?
+
+* product / workstream lead
+* engineer(s)
+* AI / LLM engineer
+* validator SME
+* possibly UX/frontend support
+* possibly platform / data / infra support
+
+### What are the biggest dependencies?
+
+* access to sample documents
+* validator SME input
+* defined review expectations / review packs
+* parser quality
+* storage / platform support
+* security / access model
+
+### How would you sequence pilot → controlled rollout → broader adoption?
+
+* build narrow MVP
+* pilot with one validator group / one review pack
+* collect overrides and feedback
+* improve rules and semantic checks
+* expand to more document types and use cases
+* then wider rollout with controls and reporting
+
+---
+
+# Red flags across all questions
+
+Here are common weak-answer signals:
+
+* describes it as just “upload docs and ask questions”
+* over-focus on vector DB and prompt only
+* no distinction between rules, retrieval, LLMs, and human review
+* no persistence or rerun design
+* no evidence traceability
+* no reviewer override concept
+* lets the LLM make final conclusions
+* proposes over-complicated agents without MVP discipline
+* no evaluation approach
+* no delivery sequencing
+
+---
+
+# Strong overall candidate profile
+
+A strong candidate usually:
+
+* frames it as a **review platform**, not a chatbot
+* clearly separates **deterministic checks**, **retrieval**, **semantic reasoning**, and **human decisions**
+* understands **document structure, traceability, and review iteration**
+* thinks in **schemas, workflow states, and persistent objects**
+* balances **technical design** with **controls and delivery pragmatism**
+* can explain where agentic AI helps and where it does not
+
+If you want, I can turn this into a clean **interviewer answer key / scorecard document** in Word-style format.
+
+
+
+
+Below is a compact **one-page interviewer sheet** for the **AI-assisted Model Documentation Review Platform** case study.
+
+# High-Value Practical Challenge Questions + Interviewer Answer Signals
+
+## 1) Rules vs semantic interpretation conflict
+
+**Question:** A required section appears missing under template rules, but the LLM believes the content exists in a differently named section. What should the system do?
+**Strong signals:** Keeps both signals separate; classifies as mapping ambiguity; shows both pieces of evidence to reviewer; does not let the LLM silently override deterministic checks; records reviewer decision explicitly; suggests later improvement to section mapping logic.
+
+## 2) Parser failure on critical appendix/table
+
+**Question:** The parser extracts a scanned appendix badly and an important validation evidence table is partially corrupted. How should the platform behave?
+**Strong signals:** Raises extraction-quality flag; blocks or downgrades dependent checks; allows unaffected checks to continue; requests manual review or better upload; avoids confident findings from corrupted evidence; logs parser failure and impacted region clearly.
+
+## 3) Binding findings to source location
+
+**Question:** How would you bind a finding back to the original document location?
+**Strong signals:** Preserves page, section, anchor, chunk ID, and ideally bbox/table-cell references at parse time; stores evidence references in the finding schema; supports jump-to-source/highlighting; handles different precision levels when exact grounding is not possible.
+
+## 4) Right standard retrieved, poor final comment
+
+**Question:** Retrieval found the relevant validation standard, but the final review comment is still weak or misleading. How would you debug it?
+**Strong signals:** Debugs in layers: retrieved chunks, reranking order, requirement mapping, chunk quality, prompt assembly, context truncation, evidence-summary mismatch, schema validation, traces by run ID; does not jump straight to “change the model.”
+
+## 5) OCR/text+retrieval vs end-to-end VLM
+
+**Question:** Why would long model documentation often favour OCR/text+retrieval over end-to-end VLM review?
+**Strong signals:** Mentions token cost, controllable chunking, evidence traceability, section-level control, easier auditability, better handling of long documents and many workflows; still recognises VLM value for screenshots, diagrams, and difficult layouts.
+
+## 6) Reviewer override reappears on rerun
+
+**Question:** A reviewer overrides a finding as acceptable, but on the next rerun the same issue is flagged again. How should the platform behave?
+**Strong signals:** Stores override as explicit reviewer action; does not lose it on rerun; surfaces prior override and new system result separately; distinguishes unchanged-content recurrence from materially changed content; uses statuses like reopened / previously overridden / needs reconciliation.
+
+## 7) Full rerun vs impacted rerun
+
+**Question:** How would you decide whether to rerun all checks or only impacted checks after a document update?
+**Strong signals:** Uses document diffing and section-level change detection where possible; reruns impacted checks first; reruns global consistency checks when needed; falls back to full rerun when change mapping confidence is weak; balances correctness with efficiency.
+
+## 8) Cross-document inconsistency
+
+**Question:** Two documents in the same submission make inconsistent claims. How should the system handle that?
+**Strong signals:** Creates structured cross-document consistency finding; references both sources clearly; avoids forcing a single “true” answer unless a precedence rule exists; flags for reviewer follow-up; may propose targeted cross-document consistency checks for common claims or fields.
+
+## 9) Too many low-value findings
+
+**Question:** The system keeps producing too many low-value findings. How would you diagnose and improve that?
+**Strong signals:** Looks at override/dismissal rates by finding type; reviews parser quality and chunking; identifies noisy rules/prompts; separates informational observations from true findings; tightens thresholds/scope; uses reviewer feedback and precision metrics instead of vague “fine-tune it.”
+
+## 10) Logging for debug, audit, and improvement
+
+**Question:** What would you log to debug, audit, and improve the platform over time?
+**Strong signals:** Mentions case ID, submission ID, document version, run ID, parser outputs/confidence, rule/review-pack version, retrieval hits, prompt inputs, model outputs, citations, findings lifecycle, reviewer comments/overrides, rerun lineage, fallback/error events; distinguishes audit logs from debug logs.
+
+## 11) Confidence without false reassurance
+
+**Question:** How would you represent confidence or reliability in the output without giving false reassurance?
+**Strong signals:** Avoids a single opaque confidence score; uses interpretable reliability signals such as extraction quality, evidence coverage, deterministic vs inferred basis, ambiguity/conflict flags, reviewer-confirmation-needed state; uses “insufficient evidence” when appropriate.
+
+## 12) 6-week MVP: hard-coded vs configurable
+
+**Question:** If you had to demo a useful MVP in 6 weeks, what would you hard-code and what would you keep configurable?
+**Strong signals:** Hard-codes one review pack, one or two document types, limited workflow states and checks, simple finding schema; keeps prompts, review-pack definitions, rule wording/thresholds, document-type mappings, filters/exports configurable where feasible; shows pragmatic sequencing rather than platform overreach.
+
+## General signs of a strong candidate
+
+They explain **system behaviour, reviewer experience, and what gets stored**. They distinguish **deterministic checks, model-driven reasoning, and human decisions**. They talk in terms of **state, objects, lineage, fallback logic, and traces**, not just prompts and vector databases.
+
+## Common weak signals
+
+They answer at a generic level only, let the LLM silently override rules, ignore reruns and overrides, skip evidence traceability, have no degradation/fallback logic, or default to “just improve the prompt/model.”
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+下面这组可以进一步加强，目标就是你说的：**问得足够 practical，让候选人很难靠临场搜索或 AI 生成一套漂亮但空的答案**。
+
+你原来的 5 题已经很好了，尤其是：
+
+* rules vs LLM 冲突
+* parser / OCR failure
+* evidence traceability
+* retrieval-debugging
+* OCR/text+retrieval vs VLM 取舍
+
+这些都很强，因为它们要求候选人讲 **trade-off、failure mode、system behavior**，不是背概念。
+
+但还可以再增强两点：
+
+1. **把问题问得更“落地”**，要求候选人说明
+
+   * 系统应该怎么表现
+   * 数据结构怎么记录
+   * UI / reviewer workflow 怎么设计
+   * 哪一步是自动、哪一步要人工介入
+
+2. **增加一些“debug / rerun / state / override / orchestration”类问题**
+   这类问题非常能区分真假经验，因为没做过平台的人，通常讲不到对象模型、状态迁移、trace、重跑策略。
+
+---
+
+# 一、对你现有 5 题的 review 和增强版
+
+---
+
+## Practical 1
+
+**Suppose a required section appears to be missing based on template rules, but the LLM believes the content exists in a differently named section. What should the system do?**
+
+### 这题为什么好
+
+这题很好，因为它同时测试：
+
+* rule engine 和 semantic interpretation 的边界
+* system 如何处理冲突
+* 是否知道不能让 LLM 静默覆盖 deterministic result
+* 是否理解 reviewer-facing output 怎么做
+
+### 建议增强问法
+
+把问题再问具体一点：
+
+**What should the platform do in the run output, in the finding schema, and in the reviewer UI?**
+
+这样候选人就不能只回答一句“交给人工 review”。
+
+### Strong answer
+
+强候选人通常会说：
+
+* keep both signals separate rather than merging them
+* record a deterministic finding such as “expected section missing by template check”
+* record a semantic observation such as “similar content may exist under section X”
+* classify it as **mapping ambiguity** or **possible equivalent section**
+* show supporting evidence to the reviewer
+* do not silently override the template rule
+* allow the reviewer to confirm whether the section should be treated as satisfied
+* use this case later to improve section mapping logic, synonym dictionary, or template matching rules
+
+### What else to look for
+
+* candidate mentions **finding types** or **finding basis**
+* candidate distinguishes **rule failure** vs **semantic suggestion**
+* candidate thinks about **learning loop** without automatically training from one example
+
+---
+
+## Practical 2
+
+**Suppose the parser extracts text from a scanned appendix badly, and an important validation evidence table is partially corrupted. How should the platform behave?**
+
+### 这题为什么好
+
+这题非常 practical，因为 parser quality 往往决定整个系统是否可用。
+没做过的人很容易跳过 extraction quality gating。
+
+### 建议增强问法
+
+你可以加一句：
+
+**Which downstream checks should be blocked, downgraded, or allowed to continue?**
+
+这样可以逼候选人谈 execution policy，而不是泛泛说“提示错误”。
+
+### Strong answer
+
+* set an extraction quality flag or confidence status
+* mark dependent checks as unreliable, blocked, or low-confidence
+* do not allow the system to generate confident evidence-based findings from corrupted content
+* surface the issue to the reviewer clearly
+* request manual review, re-upload, or a better-quality source file
+* log the parser failure and the impacted document region
+* keep unaffected checks running if they do not depend on the corrupted appendix
+* optionally store parser artifacts so the issue can be diagnosed later
+
+### What else to look for
+
+* candidate talks about **partial degradation**, not just pass/fail
+* candidate mentions **quality gating**
+* candidate understands that **not all downstream checks should fail equally**
+
+---
+
+## Practical 3
+
+**How would you bind a finding back to the original document location?**
+
+### 这题为什么好
+
+这题很强，因为做过文档审核平台的人通常会自然谈：
+
+* page
+* anchor
+* bbox
+* snippet
+* chunk lineage
+* front-end highlighting
+
+没做过的人一般只会说“加 citation”。
+
+### 建议增强问法
+
+可以加：
+
+**What would you store at parse time so that this is possible later?**
+
+### Strong answer
+
+* preserve page number plus text anchor or chunk id
+* where available, preserve bounding boxes for extracted spans or table cells
+* keep section heading and document version metadata
+* map findings to the exact evidence span used by the system
+* store evidence references in the finding schema
+* support front-end highlighting or “jump to source”
+* if exact span grounding is uncertain, fall back to section-level grounding and mark lower precision
+* maintain traceability across reruns and document versions
+
+### What else to look for
+
+* candidate mentions **parse-time artifacts**
+* candidate understands that evidence location must survive **reruns / versioning**
+* candidate talks about **precision levels** of grounding
+
+---
+
+## Practical 4
+
+**If retrieval finds the relevant validation standard, but the final review comment is still weak or misleading, how would you debug it?**
+
+### 这题为什么好
+
+这是最典型的“真假经验分界题”。
+真正做过的人往往会按层排查，而不是只说“调 prompt”。
+
+### 建议增强问法
+
+加一层：
+
+**What would you inspect first, and what logs or traces would you need?**
+
+### Strong answer
+
+* inspect the retrieved chunks and reranking order
+* inspect whether the correct requirement was actually passed into the synthesis step
+* inspect prompt assembly and whether instructions over-weighted generic commentary
+* inspect chunk boundaries and whether key qualifiers were separated from the main requirement
+* inspect evidence-summary mismatch
+* inspect output schema validation or post-processing
+* inspect whether the wrong task type was selected
+* inspect trace logs by run id, including retrieval hits, prompt inputs, model outputs, and citations
+* compare against a known-good benchmark example if available
+
+### What else to look for
+
+* candidate debugs in a **layered order**
+* candidate asks for **traceability**
+* candidate doesn’t jump straight to “change the model”
+
+---
+
+## Practical 5
+
+**Why would long model documentation often favor OCR/text+retrieval over end-to-end VLM review?**
+
+### 这题为什么好
+
+这题能测候选人是否会做 architecture judgement，而不是被“最新模型”带跑。
+
+### 建议增强问法
+
+加一句：
+
+**When would you still consider a multimodal model?**
+
+### Strong answer
+
+* lower token cost for long documents
+* easier chunking and section-aware retrieval
+* better evidence traceability and source anchoring
+* more controllable orchestration
+* easier handling of versioned document stores
+* often better for audit and repeatability
+* can work well with structured extraction pipelines for tables and headings
+* easier to separate parsing from review reasoning
+* multimodal models still useful for screenshots, diagrams, complex layouts, or poor native extraction cases
+
+### What else to look for
+
+* candidate shows **balanced judgement**
+* candidate doesn’t blindly reject VLMs
+* candidate ties answer back to **review platform requirements**
+
+---
+
+# 二、建议新增的高价值 practical questions
+
+下面这些题特别适合防止候选人靠 AI 组织“表面正确”的答案，因为都要求真实系统经验。
+
+---
+
+## Practical 6
+
+**Suppose a reviewer overrides a finding and marks it as acceptable, but on the next rerun the same issue is flagged again. How should the platform behave?**
+
+### 为什么这题强
+
+这题直接考：
+
+* persistence
+* override handling
+* rerun lineage
+* state reconciliation
+
+### Strong answer
+
+* reviewer override should be stored as an explicit action, not just a transient UI note
+* the new rerun should not silently erase prior reviewer decisions
+* the system should surface that a previously overridden issue has reappeared
+* if the underlying content has not changed, the platform may suggest reusing the prior reviewer decision, but should still show the new run result separately
+* if the content has changed materially, the prior override should be treated as historical context, not automatically reapplied
+* there should be a clear state such as reopened / previously overridden / requires reconciliation
+
+### What to look for
+
+* explicit distinction between **system result** and **reviewer decision**
+* understanding of **historical lineage**
+* no silent overwrite
+
+---
+
+## Practical 7
+
+**How would you decide whether to rerun all checks or only impacted checks after a document update?**
+
+### 为什么这题强
+
+这题能看出候选人是否理解增量执行和 dependency thinking。
+
+### Strong answer
+
+* use document diffing and section-level change detection where possible
+* rerun directly impacted checks first
+* rerun document-level consistency checks if any relevant section changed
+* rerun cross-document checks if linked evidence or references changed
+* when change detection confidence is weak, fall back to full rerun
+* keep both efficiency and correctness in mind rather than always doing one or the other
+
+### What to look for
+
+* candidate talks about **dependencies**
+* candidate knows **partial rerun is useful but risky**
+* candidate gives conditions for fallback to full rerun
+
+---
+
+## Practical 8
+
+**Suppose two documents in the same submission make inconsistent claims — for example, the methodology document says one thing, but the testing summary implies something else. How should the system handle that?**
+
+### 为什么这题强
+
+这是典型 validation review reality，不是一般 chatbot 会碰到的问题。
+
+### Strong answer
+
+* identify this as a cross-document consistency issue
+* create a structured finding referencing both sources
+* present both pieces of evidence side by side
+* avoid trying to pick the “true” answer automatically unless there is a clear precedence rule
+* flag for reviewer attention and possible follow-up to the model owner
+* consider running targeted cross-document consistency checks for common fields or claims
+
+### What to look for
+
+* candidate understands **cross-document comparison**
+* candidate avoids overclaiming certainty
+* candidate thinks in **review findings**, not only free text
+
+---
+
+## Practical 9
+
+**If the system keeps producing too many low-value findings, how would you diagnose and improve that?**
+
+### 为什么这题强
+
+这题很 practical，因为很多 review tools 失败不是因为“不会发现问题”，而是因为“噪音太多”。
+
+### Strong answer
+
+* inspect which rule types or semantic checks generate the most overrides/dismissals
+* analyse precision by finding category
+* review parser quality and chunking to see whether noisy extraction is creating false positives
+* tighten review pack scope or thresholds
+* improve prompts or evidence requirements for semantic checks
+* separate informational observations from true findings
+* use validator feedback to refine high-noise checks
+* track acceptance rate, override rate, and “useful finding” metrics over time
+
+### What to look for
+
+* candidate knows how to diagnose **signal-to-noise**
+* candidate uses **metrics and reviewer behavior**
+* candidate doesn’t just say “fine-tune the model”
+
+---
+
+## Practical 10
+
+**What would you log in order to debug, audit, and improve the platform over time?**
+
+### 为什么这题强
+
+这题很难靠临场 AI 生成真正好的答案，因为它要求平台运维思维。
+
+### Strong answer
+
+* case id, submission id, document version, review run id
+* parser outputs and extraction confidence
+* rules used / review pack version
+* retrieval hits and reranking order
+* prompt inputs and model outputs
+* citations / evidence mapping
+* findings created, updated, or dismissed
+* reviewer comments and overrides
+* rerun lineage
+* error logs, timeout logs, fallback events
+* evaluation outcomes and benchmark comparisons where relevant
+
+### What to look for
+
+* candidate thinks in **observability**
+* candidate distinguishes **audit logs** from **debug logs**
+* candidate understands versioning of rules and prompts
+
+---
+
+## Practical 11
+
+**How would you represent confidence or reliability in the output without giving false reassurance?**
+
+### 为什么这题强
+
+很多候选人会说“给个 confidence score”，但做过的人知道这很 tricky。
+
+### Strong answer
+
+* do not rely on a single opaque model confidence score
+* instead expose reliability signals such as:
+
+  * extraction quality
+  * evidence coverage
+  * deterministic vs inferred basis
+  * ambiguity detected
+  * conflict with prior reviewer decision
+* present these as interpretable indicators, not fake precision
+* use “insufficient evidence” or “needs reviewer confirmation” states where appropriate
+
+### What to look for
+
+* candidate avoids naive confidence scoring
+* candidate prefers **interpretable reliability signals**
+
+---
+
+## Practical 12
+
+**If you had to demo a useful MVP in 6 weeks, what would you hard-code and what would you keep configurable?**
+
+### 为什么这题强
+
+这题特别能测 lead-level pragmatism。
+
+### Strong answer
+
+Hard-code first:
+
+* one review pack
+* one or two document types
+* fixed workflow states
+* limited number of rules/checks
+* simple finding schema
+
+Keep configurable where possible:
+
+* rule thresholds or wording
+* document-type mapping
+* review pack definitions
+* prompts/templates
+* UI filtering and export options
+
+### What to look for
+
+* candidate can **pragmatically sequence**
+* not everything is abstract or “future platform”
+
+---
+
+# 三、把这些 practical questions 变得更难“被 AI 糊弄”的方法
+
+你可以用以下方式提问，让候选人更难靠通用答案过关。
+
+---
+
+## 方法1：要求“先讲系统行为，再讲原因”
+
+例如不要只问：
+
+* What would you do?
+
+而要问：
+
+* **What should the platform do, what should the reviewer see, and what should be stored in the run record?**
+
+这样候选人必须回答：
+
+* system behavior
+* UI behavior
+* persistence behavior
+
+---
+
+## 方法2：要求区分不同层
+
+例如：
+
+* What happens in the parser layer?
+* What happens in orchestration?
+* What happens in the finding schema?
+* What happens in the reviewer workflow?
+
+这样很容易看出是否只是会讲抽象概念。
+
+---
+
+## 方法3：要求给出状态或对象
+
+例如：
+
+* What statuses would you use?
+* What fields would you store?
+* What entity would own that decision?
+
+这类问题很难临场靠 AI 说得很真。
+
+---
+
+## 方法4：要求讲 fallback logic
+
+例如：
+
+* If this fails, what happens next?
+* What should be blocked, downgraded, or allowed through?
+* When do you fall back to manual review?
+
+真正做过的人，通常会自然讲出 graceful degradation。
+
+---
+
+## 方法5：要求先说“第一步 debug 看什么”
+
+例如：
+
+* What would you inspect first?
+* What logs would you need?
+* What is the most likely failure layer?
+
+这样能快速识别是否真做过线上或准生产系统。
+
+---
+
+# 四、我建议你最终保留的高价值 practical question set
+
+如果你只想保留一组最强的问题，我建议这 8 个：
+
+1. **Rules vs LLM conflict**
+   Required section missing by rule, but found semantically elsewhere.
+
+2. **Parser failure on critical appendix/table**
+   What gets blocked or downgraded?
+
+3. **Finding-to-source binding**
+   How do you preserve exact evidence traceability?
+
+4. **Retrieved the right standard but poor final comment**
+   How do you debug it?
+
+5. **OCR/text+retrieval vs end-to-end VLM**
+   What is the trade-off?
+
+6. **Reviewer override reappears on rerun**
+   How do you preserve reviewer decisions without breaking rerun logic?
+
+7. **Cross-document inconsistency**
+   Two documents in the same pack conflict.
+
+8. **Too many low-value findings**
+   How do you diagnose noise and improve precision?
+
+---
+
+# 五、你可以直接在面试里这样问
+
+下面这版会比原来更“防 AI 套话”。
+
+### Example phrasing
+
+* What should the platform do, what should the reviewer see, and what should be stored in the system?
+* Walk me through the exact behavior of the system in this case.
+* Which part is deterministic, which part is model-driven, and which part requires human confirmation?
+* What would you inspect first if this went wrong in production?
+* What would the finding object look like here?
+* How would this behave differently on a rerun?
+
+---
+
+如果你愿意，我下一步可以直接把这部分整理成一页 **“High-value practical challenge questions + interviewer answer signals”**，方便你在面试时打印出来直接用。
+
